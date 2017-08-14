@@ -1,0 +1,39 @@
+<md-card class="card">
+    <md-card-header>
+        <md-card-title>
+            <h1>Login</h1>
+        </md-card-title>
+    </md-card-header>
+    <md-card-content>
+
+        <form class="form" [formGroup]="loginForm">
+            <table class="table">
+                <tr>
+                    <td>
+                        <md-input-container class="input">
+                            <input mdInput placeholder="Username" [(ngModel)]="model.username" formControlName="usernameCtrl" />
+                            <md-error *ngIf="usernameCtrl.hasError('required')">
+                                The username is <strong>required</strong>
+                            </md-error>
+                        </md-input-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <md-input-container class="input">
+                            <input mdInput type="password" placeholder="Password" [(ngModel)]="model.password" formControlName="passwordCtrl" />
+                            <md-error *ngIf="passwordCtrl.hasError('required')">
+                                Password is <strong>required</strong>
+                            </md-error>
+                        </md-input-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button md-button class="button" (click)="login()" [disabled]="loginForm.invalid">SEND</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </md-card-content>
+</md-card>

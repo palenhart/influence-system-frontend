@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.card {
+    width: 700px;
+    margin: 50px auto;
+}
+
+.h1 {
+    margin: 0 auto;
+ }
+  
+.mat-button {
+    color: rgba(0,0,0,.87);
+    text-decoration: none;
+}
+
+div.mat-card-header-text {
+    margin: 0 auto;
+}

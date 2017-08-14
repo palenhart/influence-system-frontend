@@ -1,0 +1,44 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1>Your profile</h1>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+  <table class="table">
+    <tr>
+      <td><label>Name:</label></td>
+      <td>{{corporateer?.name}}</td>
+    </tr>
+    <tr>
+      <td><label>Rank:</label></td>
+      <td>{{corporateer?.rank.name}}</td>
+    </tr>
+    <tr>
+      <td><label>Main Division:</label></td>
+      <td>{{corporateer?.mainDivision.name}}</td>
+    </tr>
+    <tr>
+      <td><label>Department:</label></td>
+      <td>{{corporateer?.mainDivision.department.name}}</td>
+    </tr>
+    <tr>
+      <td><label>Tributes:</label></td>
+      <td>{{corporateer?.tributes}}</td>
+    </tr>
+    <tr>
+      <td><label>Tributes gained per month:</label></td>
+      <td>{{corporateer?.rank.tributesPerWeek}}</td>
+    </tr>
+    <tr>
+      <td><label>Influence total:</label></td>
+      <td>{{corporateer?.totalInfluence}}</td>
+    </tr>
+    <tr>
+      <td>
+        <app-influence-details></app-influence-details>
+      </td>
+    </tr>
+  </table>
+</md-card-content>
+</md-card>

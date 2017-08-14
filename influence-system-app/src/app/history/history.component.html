@@ -1,0 +1,74 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1> Transaction history </h1>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <md-tab-group>
+      <md-tab label="Sent">
+        <div class="example-container mat-elevation-z8">
+          <md-table #table [dataSource]="dataSource">
+
+            <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Timestamp Column -->
+            <ng-container cdkColumnDef="time">
+              <md-header-cell *cdkHeaderCellDef> Time </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.time}} </md-cell>
+            </ng-container>
+
+            <!-- Type Column -->
+            <ng-container cdkColumnDef="type">
+              <md-header-cell *cdkHeaderCellDef> Type </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.type}} </md-cell>
+            </ng-container>
+
+            <!-- Division Column -->
+            <ng-container cdkColumnDef="division">
+              <md-header-cell *cdkHeaderCellDef> Division </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.division}} </md-cell>
+            </ng-container>
+
+            <!-- Department Column -->
+            <ng-container cdkColumnDef="department">
+                <md-header-cell *cdkHeaderCellDef> Department </md-header-cell>
+                <md-cell *cdkCellDef="let row"> {{row.department}} </md-cell>
+              </ng-container>
+
+            <!-- Receiver Column -->
+            <ng-container cdkColumnDef="receiver">
+              <md-header-cell *cdkHeaderCellDef> Recipient </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.receiver}} </md-cell>
+            </ng-container>
+
+            <!-- Sender Column -->
+            <ng-container cdkColumnDef="sender">
+                <md-header-cell *cdkHeaderCellDef>Sender</md-header-cell>
+                <md-cell *cdkCellDef="let row"> {{row.sender}} </md-cell>
+              </ng-container>
+
+            <!-- Amount Column -->
+            <ng-container cdkColumnDef="amount">
+              <md-header-cell *cdkHeaderCellDef>Amount</md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.amount}} </md-cell>
+            </ng-container>
+
+            <!-- Message Column -->
+            <ng-container cdkColumnDef="message">
+                <md-header-cell *cdkHeaderCellDef>Message</md-header-cell>
+                <md-cell *cdkCellDef="let row"> {{row.message}} </md-cell>
+              </ng-container>
+
+            <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+            <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+          </md-table>
+        </div>
+      </md-tab>
+      <md-tab label="Received">
+        Content 2
+      </md-tab>
+    </md-tab-group>
+  </md-card-content>
+</md-card>

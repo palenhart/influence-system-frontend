@@ -1,0 +1,7 @@
+.table > tbody > tr > td {
+    border-top: none
+}
+
+.table {
+  margin: 0 auto;
+}

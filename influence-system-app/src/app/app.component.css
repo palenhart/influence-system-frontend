@@ -1,0 +1,26 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.sidenav-container {
+  min-height: 600px;
+}
+
+.sidenav-container md-sidenav {
+  max-width: 300px;
+}
+
+.sidenav-container .mat-sidenav-content,
+.sidenav-container md-sidenav {
+  display: flex;
+  overflow: visible;
+}
+
+.scrolling-content {
+  overflow: auto;
+}

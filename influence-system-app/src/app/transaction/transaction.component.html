@@ -1,0 +1,88 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1> Create transaction </h1>
+    </md-card-title>
+    <!--<md-card-subtitle>Dog Breed</md-card-subtitle>-->
+  </md-card-header>
+  <md-card-content>
+    <form class="form" [formGroup]="transactionForm">
+      <table class="table">
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <input mdInput placeholder="Recipient" [mdAutocomplete]="auto" [(ngModel)]="receiver" formControlName="receiverCtrl" />
+              <md-error *ngIf="receiverCtrl.hasError('required')">
+                A recipient is <strong>required</strong>
+              </md-error>
+              <md-error *ngIf="receiverCtrl.hasError('invalid')">
+                You must choose a valid recipient
+              </md-error>
+            </md-input-container>
+
+            <md-autocomplete #auto="mdAutocomplete">
+              <md-option *ngFor="let member of filteredMembers | async" [value]="member.name">
+                {{ member.name }}
+              </md-option>
+            </md-autocomplete>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <input mdInput placeholder="Amount" [(ngModel)]="amount" formControlName="amountCtrl" />
+              <md-hint align="end">{{ currentCorporateer.tributes }} tributes available</md-hint>
+              <md-error *ngIf="amountCtrl.hasError('min')">
+                Amount must be positive
+              </md-error>
+              <md-error *ngIf="amountCtrl.hasError('max')">
+                You don't have enough tributes
+              </md-error>
+              <md-error *ngIf="amountCtrl.hasError('pattern')">
+                Please enter a numerical value
+              </md-error>
+              <md-error *ngIf="amountCtrl.hasError('required')">
+                Amount is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-select class="input" placeholder="Type" [(ngModel)]="type" name="type" formControlName="typeCtrl">
+              <md-option *ngFor="let type of types" [value]="type.value">
+                {{type.viewValue}}
+              </md-option>
+            </md-select>
+            <md-error *ngIf="typeCtrl.hasError('required')">
+              Type is <strong>required</strong>
+            </md-error>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <textarea mdInput placeholder="Message" [(ngModel)]="message" formControlName="messageCtrl"></textarea>
+              <md-hint align="end">{{ message.length }} / 250 </md-hint>
+              <md-error *ngIf="messageCtrl.hasError('required')">
+                Message is <strong>required</strong>
+              </md-error>
+              <md-error *ngIf="messageCtrl.hasError('maxlength')">
+                Message is too long
+              </md-error>
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button md-button class="button" (click)="sendTransaction()" [disabled]="transactionForm.invalid">SEND</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </md-card-content>
+  <!--<md-card-actions>
+    <button md-button>LIKE</button>
+    <button md-button>SHARE</button>
+  </md-card-actions>-->
+</md-card>

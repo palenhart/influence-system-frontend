@@ -1,0 +1,17 @@
+:host /deep/ form div {
+    padding-bottom: 10px
+}
+
+:host /deep/ form label, div {
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+:host /deep/ .ng-valid[required] {
+    border-left: 5px solid #42A948; /* green */
+}
+
+:host /deep/ .ng-invalid:not(.ng-pristine) {
+    border-left: 5px solid #a94442; /* red */
+}
