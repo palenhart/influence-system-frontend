@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
@@ -16,28 +17,14 @@ import { TransactionHistoryService } from '../services/transaction-history.servi
 })
 export class HistoryComponent implements OnInit {
 
-  displayedColumns = ['time', 'sender', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
+  displayedColumns = ['time', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
   transactionDatabase = new TransactionDatabase();
   dataSource: TransactionDataSource | null;
 
   ngOnInit() {
     this.dataSource = new TransactionDataSource(this.transactionDatabase);
-    var transactions: Transaction[];
-    this.transactionHistoryService.getSendTransactions().then(sent => transactions = sent);
-    /**this.transactionDatabase.refreshData(transactions);*/
-    this.transactionDatabase.refreshData([
-      {
-        "time": "String",
-        "sender": "String",
-        "receiver": "String",
-        "amount": "4",
-        "type": "String",
-        "message": "String",
-        "division": "String",
-        "department": "String",
-      }
-    ]
-    );
+    this.transactionHistoryService.getSendTransactions().then(sent =>
+      this.transactionDatabase.refreshData(sent));
   }
 
   constructor(private transactionHistoryService: TransactionHistoryService) { }
