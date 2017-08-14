@@ -16,7 +16,7 @@
             <!-- Timestamp Column -->
             <ng-container cdkColumnDef="time">
               <md-header-cell *cdkHeaderCellDef> Time </md-header-cell>
-              <md-cell *cdkCellDef="let row"> {{row.time}} </md-cell>
+              <md-cell *cdkCellDef="let row"> {{row.timestamp | date:'short'}} </md-cell>
             </ng-container>
 
             <!-- Type Column -->
@@ -42,12 +42,6 @@
               <md-header-cell *cdkHeaderCellDef> Recipient </md-header-cell>
               <md-cell *cdkCellDef="let row"> {{row.receiver}} </md-cell>
             </ng-container>
-
-            <!-- Sender Column -->
-            <ng-container cdkColumnDef="sender">
-                <md-header-cell *cdkHeaderCellDef>Sender</md-header-cell>
-                <md-cell *cdkCellDef="let row"> {{row.sender}} </md-cell>
-              </ng-container>
 
             <!-- Amount Column -->
             <ng-container cdkColumnDef="amount">
