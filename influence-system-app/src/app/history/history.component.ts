@@ -17,14 +17,22 @@ import { TransactionHistoryService } from '../services/transaction-history.servi
 })
 export class HistoryComponent implements OnInit {
 
-  displayedColumns = ['time', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
-  transactionDatabase = new TransactionDatabase();
-  dataSource: TransactionDataSource | null;
+  displayedSentColumns = ['time', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
+  displayedReceivedColumns = ['time', 'sender', 'amount', 'type', 'division', 'department', 'message'];
+  transactionSentDatabase = new TransactionDatabase();
+  transactionReceivedDatabase = new TransactionDatabase();
+  sentDataSource: TransactionDataSource | null;
+  receivedDataSource: TransactionDataSource | null;
 
   ngOnInit() {
-    this.dataSource = new TransactionDataSource(this.transactionDatabase);
+    this.sentDataSource = new TransactionDataSource(this.transactionSentDatabase);
     this.transactionHistoryService.getSendTransactions().then(sent =>
-      this.transactionDatabase.refreshData(sent));
+      this.transactionSentDatabase.refreshData(sent));
+
+
+    this.receivedDataSource = new TransactionDataSource(this.transactionReceivedDatabase);
+    this.transactionHistoryService.getReceivedTransactions().then(received =>
+      this.transactionReceivedDatabase.refreshData(received));
   }
 
   constructor(private transactionHistoryService: TransactionHistoryService) { }
