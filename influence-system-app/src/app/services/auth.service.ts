@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { User } from '../user';
-import { Authority } from '../authority';
+import { Role } from '../role';
 
 @Injectable()
 export class AuthService {
@@ -67,7 +67,7 @@ export class AuthService {
             return Promise.resolve(false);
         }
         return this.getCurrentUser().then(user => {
-            if (user.authorities.findIndex(authority => authority.name.indexOf("ROLE_ADMIN") >= 0) >= 0) {
+            if (user.roles.findIndex(role => role.name.indexOf("ROLE_ADMIN") >= 0) >= 0) {
                 return true;
             }
             else {
@@ -81,6 +81,20 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());
         this.possibleStatusChange();
+    }
+
+    changePassword(oldPassword: string, newPassword: string): Observable<any> {
+        const url = 'http://localhost:8080/changePassword/';
+        var secureHeaders = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.getToken()
+        });
+        return this.http.post(url, JSON.stringify({ oldPassword: oldPassword, newPassword: newPassword }), { headers: secureHeaders })
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 
     getCurrentUser(): Promise<User> {

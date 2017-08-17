@@ -1,0 +1,39 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1>User settings</h1>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <h2>Change Password</h2>
+    <form class="form" [formGroup]="passwordChangeForm">
+      <table class="table">
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <input mdInput type="password" placeholder="current" [(ngModel)]="model.oldPassword" formControlName="oldPasswordCtrl" />
+              <md-error *ngIf="oldPasswordCtrl.hasError('required')">
+                The current password is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <input mdInput type="password" placeholder="new" [(ngModel)]="model.newPassword" formControlName="newPasswordCtrl" />
+              <md-error *ngIf="newPasswordCtrl.hasError('required')">
+                The new password is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button md-button class="button" (click)="changePassword()" [disabled]="passwordChangeForm.invalid">CHANGE</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </md-card-content>
+</md-card>

@@ -56,6 +56,7 @@ import { AdminComponent } from './admin/admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HistoryComponent } from './history/history.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { HistoryComponent } from './history/history.component';
     NotFoundComponent,
     ForbiddenComponent,
     HistoryComponent,
+    UserSettingsComponent,
   ],
   imports: [
     BrowserModule,
