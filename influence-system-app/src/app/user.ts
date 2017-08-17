@@ -1,8 +1,8 @@
 import { Corporateer } from './corporateer';
-import { Authority } from './authority';
+import { Role } from './role';
 
 export class User {
     username: String;
     email: String;
-    authorities: Authority[];
+    roles: Role[];
 }

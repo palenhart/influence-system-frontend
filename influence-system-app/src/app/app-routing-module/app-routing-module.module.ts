@@ -6,6 +6,7 @@ import { WelcomeComponent } from '../welcome/welcome.component';
 import { TransactionComponent } from '../transaction/transaction.component';
 import { HistoryComponent } from '../history/history.component';
 import { AdminComponent } from '../admin/admin.component';
+import { UserSettingsComponent } from '../user-settings/user-settings.component';
 import { LoginFormComponent } from '../auth/login-form/login-form.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { ForbiddenComponent } from '../forbidden/forbidden.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'login', component: LoginFormComponent },
   { path: '404', component: NotFoundComponent },

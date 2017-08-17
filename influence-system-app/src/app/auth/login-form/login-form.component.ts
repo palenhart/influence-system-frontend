@@ -17,7 +17,6 @@ export class LoginFormComponent implements OnInit {
     loading = false;
     error = '';
 
-
     usernameCtrl: FormControl;
     passwordCtrl: FormControl;
 
