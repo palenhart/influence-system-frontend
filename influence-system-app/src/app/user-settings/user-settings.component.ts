@@ -3,7 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
+import { CorporateerService } from '../services/corporateer.service';
+import { ObjectService } from '../services/object.service';
 import { User } from '../user';
+import { Division } from '../division';
+import { Corporateer } from '../corporateer';
 import { map } from "rxjs/operator/map";
 
 @Component({
@@ -16,18 +20,30 @@ export class UserSettingsComponent implements OnInit {
   model: any = {};
   error = '';
 
+  divisions: Division[];
+  currentCorporateer: Corporateer;
+  division: string;
+
+  divisionCtrl: FormControl;
   oldPasswordCtrl: FormControl;
   newPasswordCtrl: FormControl;
 
+  divisionChangeForm: FormGroup;
   passwordChangeForm: FormGroup;
 
-  constructor(private authService: AuthService, private snackBar: MdSnackBar) {
-    this.oldPasswordCtrl = new FormControl('', [
+  constructor(private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
+    this.divisionCtrl = new FormControl('', [
       Validators.required
     ]),
+      this.oldPasswordCtrl = new FormControl('', [
+        Validators.required
+      ]),
       this.newPasswordCtrl = new FormControl('', [
         Validators.required
       ]),
+      this.divisionChangeForm = new FormGroup({
+        'divisionCtrl': this.divisionCtrl
+      }),
       this.passwordChangeForm = new FormGroup({
         'oldPasswordCtrl': this.oldPasswordCtrl,
         'newPasswordCtrl': this.newPasswordCtrl
@@ -35,6 +51,12 @@ export class UserSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.objectService.getDivisions().then(divisions => this.divisions = divisions);
+    this.corporateerService.getCurrentCorporateer().then(corporateer => this.division = corporateer.mainDivision.name);
+  }
+
+  changeDivision() {
+    this.corporateerService.setCurrentCoporateerMainDivision(this.division)
   }
 
   changePassword() {
@@ -44,7 +66,11 @@ export class UserSettingsComponent implements OnInit {
         this.openSnackBar("Password successfully changed")
       })
       .catch(error => {
-        this.openSnackBar(JSON.parse(error._body).reason)
+        var reason = JSON.parse(error._body).reason;
+        this.openSnackBar("Could not change password");
+        if (reason === "wrong password") {
+          this.oldPasswordCtrl.setErrors({ "wrong password": true });
+        }
       });
   }
 

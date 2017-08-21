@@ -5,15 +5,39 @@
     </md-card-title>
   </md-card-header>
   <md-card-content>
+    <h2>Change Division</h2>
+    <form class="form" [formGroup]="divisionChangeForm">
+      <table class="table">
+        <tr>
+          <td>
+            <md-select class="input" placeholder="Division" [(ngModel)]="division" name="division" formControlName="divisionCtrl">
+              <md-option *ngFor="let division of divisions" [value]="division.name">
+                {{division.name}}
+              </md-option>
+            </md-select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button md-button class="button" (click)="changeDivision()" [disabled]="divisionChangeForm.invalid">CHANGE DIVISION</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
     <h2>Change Password</h2>
     <form class="form" [formGroup]="passwordChangeForm">
       <table class="table">
         <tr>
           <td>
             <md-input-container class="input">
-              <input mdInput type="password" placeholder="current" [(ngModel)]="model.oldPassword" formControlName="oldPasswordCtrl" />
+              <input mdInput type="password" placeholder="current password" [(ngModel)]="model.oldPassword" formControlName="oldPasswordCtrl"
+              />
               <md-error *ngIf="oldPasswordCtrl.hasError('required')">
                 The current password is <strong>required</strong>
+              </md-error>
+              <md-error *ngIf="oldPasswordCtrl.hasError('wrong password')">
+                This password is <strong>wrong</strong>
               </md-error>
             </md-input-container>
           </td>
@@ -21,7 +45,8 @@
         <tr>
           <td>
             <md-input-container class="input">
-              <input mdInput type="password" placeholder="new" [(ngModel)]="model.newPassword" formControlName="newPasswordCtrl" />
+              <input mdInput type="password" placeholder="new password" [(ngModel)]="model.newPassword" formControlName="newPasswordCtrl"
+              />
               <md-error *ngIf="newPasswordCtrl.hasError('required')">
                 The new password is <strong>required</strong>
               </md-error>
@@ -30,7 +55,7 @@
         </tr>
         <tr>
           <td>
-            <button md-button class="button" (click)="changePassword()" [disabled]="passwordChangeForm.invalid">CHANGE</button>
+            <button md-button class="button" (click)="changePassword()" [disabled]="passwordChangeForm.invalid">CHANGE PASSWORD</button>
           </td>
         </tr>
       </table>

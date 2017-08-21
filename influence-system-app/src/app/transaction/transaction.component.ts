@@ -34,7 +34,7 @@ export class TransactionComponent implements OnInit {
   corporateers: Corporateer[];
   currentCorporateer = new Corporateer;
   amount;
-  receiver= "";
+  receiver = "";
   message = "";
   type = "influence";
 
