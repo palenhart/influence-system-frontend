@@ -45,6 +45,16 @@ export class CorporateerService {
       .catch(this.handleError);
   }
 
+  setCurrentCoporateerMainDivision(division: string) {
+    const url = this.apiUrl + 'setMyMainDivision/';
+    return this.http.post(url, JSON.stringify({ division: division }), { headers: this.headers })
+      .toPromise()
+      .then(response => {
+        return response
+      })
+      .catch(this.handleError);
+  }
+
   distributeTributes() {
     const url = this.apiUrl + 'distributeTributes/';
     return this.http.get(url, { headers: this.headers })
