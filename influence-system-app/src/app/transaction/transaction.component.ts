@@ -6,8 +6,10 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 
+import { AppSettings } from '../app-settings';
 import { Corporateer } from '../corporateer';
 import { CorporateerService } from '../services/corporateer.service';
+import { ObjectService } from '../services/object.service';
 import { AuthService } from "../services/auth.service";
 
 @Component({
@@ -16,8 +18,6 @@ import { AuthService } from "../services/auth.service";
   styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit {
-
-  private apiUrl = 'http://localhost:8080/';
 
   private headers = new Headers({
     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export class TransactionComponent implements OnInit {
 
   transactionForm: FormGroup;
 
-  constructor(private http: Http, private authService: AuthService, private corporateerService: CorporateerService) {
+  constructor(private http: Http, private authService: AuthService, private corporateerService: CorporateerService, private objectService: ObjectService) {
 
     this.receiverCtrl = new FormControl('', [
       Validators.required
@@ -92,7 +92,7 @@ export class TransactionComponent implements OnInit {
       return false;
     }
 
-    const url = this.apiUrl + 'transfer/';
+    const url = AppSettings.API + 'transfer/';
     return this.http.post(url,
       JSON.stringify({ receiver: this.receiver, message: this.message, amount: this.amount, type: this.type }), { headers: this.headers })
       .map((response: Response) => {
@@ -114,7 +114,7 @@ export class TransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.corporateerService.getCorporateers().then(corporateers => this.corporateers = corporateers);
+    this.objectService.getCorporateers().then(corporateers => this.corporateers = corporateers);
     this.corporateerService.getCurrentCorporateer().then(corporateer => this.currentCorporateer = corporateer);
   }
 

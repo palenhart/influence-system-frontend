@@ -3,16 +3,16 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { AppSettings } from '../app-settings';
 import { Corporateer } from '../corporateer';
 import { User } from '../user';
 import { Rank } from '../rank';
 import { Division } from '../division';
+import { Influence } from '../influence';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class CorporateerService {
-
-  private apiUrl = 'http://localhost:8080/';
 
   private headers = new Headers({
     'Content-Type': 'application/json',
@@ -21,32 +21,24 @@ export class CorporateerService {
 
   constructor(private http: Http, private authService: AuthService) { }
 
-  getCorporateers(): Promise<Corporateer[]> {
-    const url = this.apiUrl + 'corporateers/';
+  getCurrentCorporateer(): Promise<Corporateer> {
+    const url = AppSettings.API + 'currentCorporateer/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
-      .then(response => response.json()._embedded.corporateers as Corporateer[])
+      .then(response => response.json() as Corporateer)
       .catch(this.handleError);
   }
 
-  /**getCorporateer(id: number): Promise<Corporateer> {
-    const url = this.apiUrl + 'corporateers/' + id;
+  getCurrentInfluence(): Promise<Influence[]> {
+    const url = AppSettings.API + 'currentInfluence/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
-      .then(response => response.json() as Corporateer)
-      .catch(this.handleError);
-  }*/
-
-  getCurrentCorporateer(): Promise<Corporateer> {
-    const url = this.apiUrl + 'currentCorporateer/';
-    return this.http.get(url, { headers: this.headers })
-      .toPromise()
-      .then(response => response.json() as Corporateer)
+      .then(response => response.json() as Influence[])
       .catch(this.handleError);
   }
 
   setCurrentCoporateerMainDivision(division: string) {
-    const url = this.apiUrl + 'setMyMainDivision/';
+    const url = AppSettings.API + 'setMyMainDivision/';
     return this.http.post(url, JSON.stringify({ division: division }), { headers: this.headers })
       .toPromise()
       .then(response => {
@@ -56,7 +48,7 @@ export class CorporateerService {
   }
 
   distributeTributes() {
-    const url = this.apiUrl + 'distributeTributes/';
+    const url = AppSettings.API + 'distributeTributes/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => {
