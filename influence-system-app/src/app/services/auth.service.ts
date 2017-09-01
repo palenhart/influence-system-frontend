@@ -9,13 +9,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+import { AppSettings } from '../app-settings';
 import { User } from '../user';
 import { Role } from '../role';
 
 @Injectable()
 export class AuthService {
 
-    private authUrl = 'http://localhost:8080/auth';
     private headers = new Headers({ 'Content-Type': 'application/json' });
 
     private userLoggedIn = new Subject<boolean>();
@@ -27,7 +27,7 @@ export class AuthService {
     }
 
     login(username: string, password: string): Observable<boolean> {
-        return this.http.post(this.authUrl, JSON.stringify({ username: username, password: password }), { headers: this.headers })
+        return this.http.post(AppSettings.API + 'auth', JSON.stringify({ username: username, password: password }), { headers: this.headers })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
@@ -84,7 +84,7 @@ export class AuthService {
     }
 
     changePassword(oldPassword: string, newPassword: string): Observable<any> {
-        const url = 'http://localhost:8080/changePassword/';
+        const url = AppSettings.API + 'changePassword';
         var secureHeaders = new Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.getToken()
@@ -98,7 +98,7 @@ export class AuthService {
     }
 
     getCurrentUser(): Promise<User> {
-        const url = 'http://localhost:8080/currentUser/';
+        const url = AppSettings.API + 'currentUser';
         var secureHeaders = new Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.getToken()

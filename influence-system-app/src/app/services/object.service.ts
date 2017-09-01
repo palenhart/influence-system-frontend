@@ -3,13 +3,13 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { AppSettings } from '../app-settings';
 import { Division } from '../division';
+import { Corporateer } from '../corporateer';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class ObjectService {
-
-  private apiUrl = 'http://localhost:8080/';
   
     private headers = new Headers({
       'Content-Type': 'application/json',
@@ -19,10 +19,18 @@ export class ObjectService {
   constructor(private http: Http, private authService: AuthService) { }
 
   getDivisions(): Promise<Division[]> {
-    const url = this.apiUrl + 'getDivisions/';
+    const url = AppSettings.API + 'divisions/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Division[])
+      .catch(this.handleError);
+  }
+
+  getCorporateers(): Promise<Corporateer[]> {
+    const url = AppSettings.API + 'corporateers/';
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as Corporateer[])
       .catch(this.handleError);
   }
 
