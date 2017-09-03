@@ -1,0 +1,58 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1> User list </h1>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+
+    <div class="example-container mat-elevation-z8">
+      <md-table #table [dataSource]="userDataSource">
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+
+        <!-- Name Column -->
+        <ng-container cdkColumnDef="name">
+          <md-header-cell *cdkHeaderCellDef> Username </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.username}} </md-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container cdkColumnDef="handle">
+          <md-header-cell *cdkHeaderCellDef> Corporateer </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.corporateer.name}} </md-cell>
+        </ng-container>
+
+        <!-- Tributes Column -->
+        <ng-container cdkColumnDef="tributes">
+          <md-header-cell *cdkHeaderCellDef> Tributes </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.corporateer.tributes}} </md-cell>
+        </ng-container>
+
+        <!-- mainDivision Column -->
+        <ng-container cdkColumnDef="mainDivision">
+          <md-header-cell *cdkHeaderCellDef> Main division </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.corporateer.mainDivision?.name}} </md-cell>
+        </ng-container>
+
+        <!-- Rank Column -->
+        <ng-container cdkColumnDef="rank">
+          <md-header-cell *cdkHeaderCellDef> Rank </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.corporateer.rank?.name}} </md-cell>
+        </ng-container>
+
+        <!-- totalInfluence Column -->
+        <ng-container cdkColumnDef="totalInfluence">
+          <md-header-cell *cdkHeaderCellDef> Total influence </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.corporateer.totalInfluence}} </md-cell>
+        </ng-container>
+
+        <md-header-row *cdkHeaderRowDef="displayedUserColumns"></md-header-row>
+        <md-row *cdkRowDef="let row; columns: displayedUserColumns;"></md-row>
+      </md-table>
+    </div>
+
+  </md-card-content>
+</md-card>

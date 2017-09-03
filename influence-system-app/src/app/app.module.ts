@@ -58,6 +58,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HistoryComponent } from './history/history.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { UserlistComponent } from './userlist/userlist.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     ForbiddenComponent,
     HistoryComponent,
     UserSettingsComponent,
+    UserlistComponent,
   ],
   imports: [
     BrowserModule,
