@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import { AppSettings } from '../app-settings';
 import { Division } from '../division';
 import { Corporateer } from '../corporateer';
+import { User } from '../user';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -31,6 +32,14 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Corporateer[])
+      .catch(this.handleError);
+  }
+
+  getUsers(): Promise<User[]> {
+    const url = AppSettings.API + 'users/';
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as User[])
       .catch(this.handleError);
   }
 

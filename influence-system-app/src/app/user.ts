@@ -5,4 +5,5 @@ export class User {
     username: String;
     email: String;
     roles: Role[];
+    corporateer: Corporateer;
 }
