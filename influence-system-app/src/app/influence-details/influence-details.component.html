@@ -2,30 +2,29 @@
   <md-expansion-panel-header>
     <mat-panel-title>Detailed Influence</mat-panel-title>
   </md-expansion-panel-header>
-  <table class="table">
-    <tr>
-      <td><label>Name:</label></td>
-      <td>Dummy</td>
-    </tr>
-    <tr>
-      <td><label>Rank:</label></td>
-      <td>Dummy</td>
-    </tr>
-    <tr>
-      <td><label>Main Division:</label></td>
-      <td>Dummy</td>
-    </tr>
-    <tr>
-      <td><label>Tributes:</label></td>
-      <td>Dummy</td>
-    </tr>
-    <tr>
-      <td><label>Tributes gained per month:</label></td>
-      <td>Dummy</td>
-    </tr>
-    <tr>
-      <td><label>Influence total:</label></td>
-      <td>Dummy</td>
-    </tr>
-  </table>
+  <div class="example-container mat-elevation-z8">
+    <md-table #table [dataSource]="influenceDataSource">
+
+      <!-- Division Column -->
+      <ng-container cdkColumnDef="division">
+        <md-header-cell *cdkHeaderCellDef> Division </md-header-cell>
+        <md-cell *cdkCellDef="let row"> {{row.division}} </md-cell>
+      </ng-container>
+
+      <!-- Department Column -->
+      <ng-container cdkColumnDef="department">
+        <md-header-cell *cdkHeaderCellDef> Department </md-header-cell>
+        <md-cell *cdkCellDef="let row"> {{row.department}} </md-cell>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container cdkColumnDef="amount">
+        <md-header-cell *cdkHeaderCellDef> Amount </md-header-cell>
+        <md-cell *cdkCellDef="let row"> {{row.amount}} </md-cell>
+      </ng-container>
+
+      <md-header-row *cdkHeaderRowDef="displayedInfluenceColumns"></md-header-row>
+      <md-row *cdkRowDef="let row; columns: displayedInfluenceColumns;"></md-row>
+    </md-table>
+  </div>
 </md-expansion-panel>

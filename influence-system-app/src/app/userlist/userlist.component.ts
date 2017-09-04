@@ -31,7 +31,6 @@ export class UserlistComponent implements OnInit {
 
 }
 
-/** An example database that the data source uses to retrieve data for the table. */
 export class UserDatabase {
   /** Stream that emits whenever the data has been modified. */
   dataChange: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
@@ -44,8 +43,6 @@ export class UserDatabase {
   refreshData(transactions) {
     this.dataChange.next(transactions);
   }
-
-
 }
 
 /**
