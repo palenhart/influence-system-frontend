@@ -59,6 +59,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HistoryComponent } from './history/history.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { UserlistComponent } from './userlist/userlist.component';
     HistoryComponent,
     UserSettingsComponent,
     UserlistComponent,
+    AllTransactionsComponent,
   ],
   imports: [
     BrowserModule,
