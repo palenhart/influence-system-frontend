@@ -30,10 +30,10 @@ export class CorporateerService {
   }
 
   getCurrentInfluence(): Promise<Influence[]> {
-    const url = AppSettings.API + 'currentInfluence/';
+    const url = AppSettings.API + 'currentInfluences/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
-      .then(response => response.json() as Influence[])
+      .then(response => response.json() as SimpleInfluence[])
       .catch(this.handleError);
   }
 
@@ -66,4 +66,10 @@ export class CorporateerService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
+}
+
+export class SimpleInfluence {
+  division: string;
+  department: string;
+  amount: number;
 }
