@@ -8,6 +8,7 @@ import { HistoryComponent } from '../history/history.component';
 import { AdminComponent } from '../admin/admin.component';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
 import { UserlistComponent } from '../userlist/userlist.component';
+import { AllTransactionsComponent } from '../all-transactions/all-transactions.component';
 import { LoginFormComponent } from '../auth/login-form/login-form.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { ForbiddenComponent } from '../forbidden/forbidden.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'users', component: UserlistComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'transactions', component: AllTransactionsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'login', component: LoginFormComponent },
   { path: '404', component: NotFoundComponent },
   { path: '403', component: ForbiddenComponent },

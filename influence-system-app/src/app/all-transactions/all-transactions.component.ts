@@ -11,34 +11,26 @@ import { Transaction } from '../transaction';
 import { TransactionHistoryService } from '../services/transaction-history.service';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  selector: 'app-all-transactions',
+  templateUrl: './all-transactions.component.html',
+  styleUrls: ['./all-transactions.component.css']
 })
-export class HistoryComponent implements OnInit {
+export class AllTransactionsComponent implements OnInit {
 
-  displayedSentColumns = ['time', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
-  displayedReceivedColumns = ['time', 'sender', 'amount', 'type', 'division', 'department', 'message'];
-  transactionSentDatabase = new TransactionDatabase();
-  transactionReceivedDatabase = new TransactionDatabase();
-  sentDataSource: TransactionDataSource | null;
-  receivedDataSource: TransactionDataSource | null;
-
-  ngOnInit() {
-    this.sentDataSource = new TransactionDataSource(this.transactionSentDatabase);
-    this.transactionHistoryService.getSendTransactions().then(sent =>
-      this.transactionSentDatabase.refreshData(sent));
-
-
-    this.receivedDataSource = new TransactionDataSource(this.transactionReceivedDatabase);
-    this.transactionHistoryService.getReceivedTransactions().then(received =>
-      this.transactionReceivedDatabase.refreshData(received));
-  }
+  displayedSentColumns = ['time', 'sender', 'receiver', 'amount', 'type', 'division', 'department', 'message'];
+  transactionDatabase = new TransactionDatabase();
+  transactionDataSource: TransactionDataSource | null;
 
   constructor(private transactionHistoryService: TransactionHistoryService) { }
+
+  ngOnInit() {
+    this.transactionDataSource = new TransactionDataSource(this.transactionDatabase);
+    this.transactionHistoryService.getAllTransactions().then(transactions =>
+      this.transactionDatabase.refreshData(transactions));
+  }
+
 }
 
-/** An example database that the data source uses to retrieve data for the table. */
 export class TransactionDatabase {
   /** Stream that emits whenever the data has been modified. */
   dataChange: BehaviorSubject<Transaction[]> = new BehaviorSubject<Transaction[]>([]);
