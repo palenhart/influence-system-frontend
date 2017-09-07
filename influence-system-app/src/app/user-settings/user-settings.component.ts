@@ -51,7 +51,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.objectService.getDivisions().then(divisions => this.divisions = divisions);
+    this.objectService.getDivisions().then(divisions => this.divisions = divisions.filter(division => division.name != "none" || division.department.name == "none"));
     this.corporateerService.getCurrentCorporateer().then(corporateer => this.division = corporateer.mainDivision.name);
   }
 
