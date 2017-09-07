@@ -37,8 +37,8 @@ export class InfluenceDetailsComponent implements OnInit {
 
 export class InfluenceDatabase {
   /** Stream that emits whenever the data has been modified. */
-  dataChange: BehaviorSubject<SimpleInfluence[]> = new BehaviorSubject<SimpleInfluence[]>([]);
-  get data(): SimpleInfluence[] { return this.dataChange.value; }
+  dataChange: BehaviorSubject<Influence[]> = new BehaviorSubject<Influence[]>([]);
+  get data(): Influence[] { return this.dataChange.value; }
 
   constructor() {
     this.dataChange.next(this.data);
@@ -55,15 +55,9 @@ export class InfluenceDataSource extends DataSource<any> {
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<SimpleInfluence[]> {
+  connect(): Observable<Influence[]> {
     return this._influenceDatabase.dataChange;
   }
 
   disconnect() { }
-}
-
-export class SimpleInfluence {
-  division: string;
-  department: string;
-  amount: number;
 }

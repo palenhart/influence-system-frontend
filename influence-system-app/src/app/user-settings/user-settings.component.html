@@ -12,7 +12,7 @@
           <td>
             <md-select class="input" placeholder="Division" [(ngModel)]="division" name="division" formControlName="divisionCtrl">
               <md-option *ngFor="let division of divisions" [value]="division.name">
-                {{division.name}}
+                {{division.department.name}} || {{division.name}}
               </md-option>
             </md-select>
           </td>
