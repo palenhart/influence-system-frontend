@@ -31,7 +31,7 @@ export class InfluenceDetailsComponent implements OnInit {
   ngOnInit() {
     this.influenceDataSource = new InfluenceDataSource(this.influenceDatabase);
     this.corporateerService.getCurrentInfluence().then(influences =>
-      this.influenceDatabase.refreshData(influences));
+      this.influenceDatabase.refreshData(influences.filter(influence => influence.amount > 0)));
   }
 }
 
