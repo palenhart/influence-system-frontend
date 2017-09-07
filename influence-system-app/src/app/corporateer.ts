@@ -8,5 +8,5 @@ export class Corporateer {
     mainDivision: Division;
     rank: Rank;
     totalInfluence: number;
-
+    lifetimeInfluence: number;
 }
