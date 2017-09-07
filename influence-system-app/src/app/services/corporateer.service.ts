@@ -33,7 +33,7 @@ export class CorporateerService {
     const url = AppSettings.API + 'currentInfluences/';
     return this.http.get(url, { headers: this.headers })
       .toPromise()
-      .then(response => response.json() as SimpleInfluence[])
+      .then(response => response.json() as Influence[])
       .catch(this.handleError);
   }
 
@@ -62,14 +62,23 @@ export class CorporateerService {
       .catch(this.handleError);
   }
 
+  convertInfluence(influence: Influence) {
+    const url = AppSettings.API + 'convertInfluence/';
+    return this.http.post(url, JSON.stringify( influence ), { headers: this.headers })
+      .toPromise()
+      .then(response => {
+        if (response.status === 200) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
-}
-
-export class SimpleInfluence {
-  division: string;
-  department: string;
-  amount: number;
 }

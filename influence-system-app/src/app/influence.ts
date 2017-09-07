@@ -1,7 +1,11 @@
-import { Division } from './division';
-
 export class Influence {
-    division: Division;
+    division: string;
+    department: string;
     amount: number;
 
+    constructor(division, department, amount) {
+        this.division = division;
+        this.department = department;
+        this.amount = amount;
+    }
 }
