@@ -51,6 +51,7 @@ import { InfluenceDetailsComponent } from './influence-details/influence-details
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { AuthService } from './services/auth.service';
 import { ObjectService } from './services/object.service';
+import { TransactionService } from './services/transaction.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AdminGuard } from './services/admin-guard.service';
 import { AdminComponent } from './admin/admin.component';
@@ -121,7 +122,7 @@ import { InfluenceConversionComponent } from './influence-conversion/influence-c
     HttpModule,
     CdkTableModule
   ],
-  providers: [CorporateerService, AuthService, ObjectService, TransactionHistoryService, AuthGuard, AdminGuard],
+  providers: [CorporateerService, AuthService, ObjectService, TransactionHistoryService, TransactionService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { MdSnackBar } from '@angular/material';
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
@@ -10,6 +11,7 @@ import { AppSettings } from '../app-settings';
 import { Corporateer } from '../corporateer';
 import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
+import { TransactionService } from '../services/transaction.service'
 import { AuthService } from "../services/auth.service";
 
 @Component({
@@ -45,7 +47,7 @@ export class TransactionComponent implements OnInit {
 
   transactionForm: FormGroup;
 
-  constructor(private http: Http, private authService: AuthService, private corporateerService: CorporateerService, private objectService: ObjectService) {
+  constructor(private http: Http, private authService: AuthService, private corporateerService: CorporateerService, private objectService: ObjectService, private transactionService: TransactionService, private snackBar: MdSnackBar) {
 
     this.receiverCtrl = new FormControl('', [
       Validators.required
@@ -92,17 +94,11 @@ export class TransactionComponent implements OnInit {
       return false;
     }
 
-    const url = AppSettings.API + 'transfer/';
-    return this.http.post(url,
-      JSON.stringify({ receiver: this.receiver, message: this.message, amount: this.amount, type: this.type }), { headers: this.headers })
-      .map((response: Response) => {
-        if (response.status === 200) {
-          this.corporateerService.getCurrentCorporateer().then(corporateer => this.currentCorporateer = corporateer);
-          return true;
-        } else {
-          return false;
-        }
-      }).catch((error: any) => Observable.throw(error.json().error || 'Server error')).subscribe();
+    this.transactionService.transfer(this.receiver, this.message, this.amount, this.type)
+      .then(response => {
+        this.openSnackBar("Transaction successful");
+        this.corporateerService.getCurrentCorporateer().then(corporateer => this.currentCorporateer = corporateer);
+      });
   }
 
   filterMembers(val: string) {
@@ -116,6 +112,10 @@ export class TransactionComponent implements OnInit {
   ngOnInit() {
     this.objectService.getCorporateers().then(corporateers => this.corporateers = corporateers);
     this.corporateerService.getCurrentCorporateer().then(corporateer => this.currentCorporateer = corporateer);
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 3000 });
   }
 
 }
