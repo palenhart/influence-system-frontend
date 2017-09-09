@@ -62,9 +62,9 @@ export class CorporateerService {
       .catch(this.handleError);
   }
 
-  convertInfluence(influence: Influence) {
+  convertInfluence(influence: Influence, toGeneral: boolean) {
     const url = AppSettings.API + 'convertInfluence/';
-    return this.http.post(url, JSON.stringify( influence ), { headers: this.headers })
+    return this.http.post(url, JSON.stringify( {influence, toGeneral} ), { headers: this.headers })
       .toPromise()
       .then(response => {
         if (response.status === 200) {
