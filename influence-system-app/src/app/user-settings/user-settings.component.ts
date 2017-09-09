@@ -25,7 +25,7 @@ export class UserSettingsComponent implements OnInit {
   division: string;
 
   divisionCtrl: FormControl;
-  oldPasswordCtrl: FormControl;
+  currentPasswordCtrl: FormControl;
   newPasswordCtrl: FormControl;
 
   divisionChangeForm: FormGroup;
@@ -35,7 +35,7 @@ export class UserSettingsComponent implements OnInit {
     this.divisionCtrl = new FormControl('', [
       Validators.required
     ]),
-      this.oldPasswordCtrl = new FormControl('', [
+      this.currentPasswordCtrl = new FormControl('', [
         Validators.required
       ]),
       this.newPasswordCtrl = new FormControl('', [
@@ -45,7 +45,7 @@ export class UserSettingsComponent implements OnInit {
         'divisionCtrl': this.divisionCtrl
       }),
       this.passwordChangeForm = new FormGroup({
-        'oldPasswordCtrl': this.oldPasswordCtrl,
+        'currentPasswordCtrl': this.currentPasswordCtrl,
         'newPasswordCtrl': this.newPasswordCtrl
       });
   }
@@ -60,16 +60,16 @@ export class UserSettingsComponent implements OnInit {
   }
 
   changePassword() {
-    this.authService.changePassword(this.model.oldPassword, this.model.newPassword)
+    this.authService.changePassword(this.model.currentPassword, this.model.newPassword)
       .toPromise()
       .then(response => {
         this.openSnackBar("Password successfully changed")
       })
       .catch(error => {
         var reason = JSON.parse(error._body).reason;
-        this.openSnackBar("Could not change password");
+        this.openSnackBar(reason);
         if (reason === "wrong password") {
-          this.oldPasswordCtrl.setErrors({ "wrong password": true });
+          this.currentPasswordCtrl.setErrors({ "wrong password": true });
         }
       });
   }

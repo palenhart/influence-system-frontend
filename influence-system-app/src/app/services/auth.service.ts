@@ -83,13 +83,13 @@ export class AuthService {
         this.possibleStatusChange();
     }
 
-    changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    changePassword(currentPassword: string, newPassword: string): Observable<any> {
         const url = AppSettings.API + 'changePassword';
         var secureHeaders = new Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.getToken()
         });
-        return this.http.post(url, JSON.stringify({ oldPassword: oldPassword, newPassword: newPassword }), { headers: secureHeaders })
+        return this.http.post(url, JSON.stringify({ currentPassword: currentPassword, newPassword: newPassword }), { headers: secureHeaders })
     }
 
     private handleError(error: any): Promise<any> {
