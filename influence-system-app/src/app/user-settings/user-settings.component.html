@@ -31,12 +31,12 @@
         <tr>
           <td>
             <md-input-container class="input">
-              <input mdInput type="password" placeholder="current password" [(ngModel)]="model.oldPassword" formControlName="oldPasswordCtrl"
+              <input mdInput type="password" placeholder="current password" [(ngModel)]="model.currentPassword" formControlName="currentPasswordCtrl"
               />
-              <md-error *ngIf="oldPasswordCtrl.hasError('required')">
+              <md-error *ngIf="currentPasswordCtrl.hasError('required')">
                 The current password is <strong>required</strong>
               </md-error>
-              <md-error *ngIf="oldPasswordCtrl.hasError('wrong password')">
+              <md-error *ngIf="currentPasswordCtrl.hasError('wrong password')">
                 This password is <strong>wrong</strong>
               </md-error>
             </md-input-container>
