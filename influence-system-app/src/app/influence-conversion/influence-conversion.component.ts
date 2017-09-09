@@ -18,16 +18,19 @@ export class InfluenceConversionComponent implements OnInit {
 
   model: any = {};
   error = '';
+  waiting = false;
 
   influences: Influence[];
   influence = new Influence("none", "none", 0);
   amount: number;
+  toGeneral = false;
 
   divisionsWithInfluence: string[];
   currentCorporateer: Corporateer;
   division: string;
 
   divisionCtrl: FormControl;
+  toGeneralCtrl: FormControl;
   amountCtrl: FormControl;
 
   influenceGeneralizationForm: FormGroup;
@@ -36,6 +39,9 @@ export class InfluenceConversionComponent implements OnInit {
     this.divisionCtrl = new FormControl('', [
       Validators.required
     ]),
+      this.toGeneralCtrl = new FormControl('', [
+        Validators.required
+      ]),
       this.amountCtrl = new FormControl('', [
         Validators.required,
         Validators.pattern(/^[-]?[0-9]+$/),
@@ -44,6 +50,7 @@ export class InfluenceConversionComponent implements OnInit {
       ]),
       this.influenceGeneralizationForm = new FormGroup({
         'divisionCtrl': this.divisionCtrl,
+        'toGeneralCtrl': this.toGeneralCtrl,
         'amountCtrl': this.amountCtrl
       });
   }
@@ -65,12 +72,15 @@ export class InfluenceConversionComponent implements OnInit {
   }
 
   convertInfluence() {
+    this.waiting = true;
     var influenceToConvert = new Influence(this.influence.division, this.influence.department, this.amount);
-    this.corporateerService.convertInfluence(influenceToConvert)
+    this.corporateerService.convertInfluence(influenceToConvert, this.toGeneral)
       .then(response => {
         this.openSnackBar("Influence successfully converted")
         this.corporateerService.getCurrentInfluence().then(influences => {
-          this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0)
+          this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0);
+          this.influence = new Influence("none", "none", 0);
+          this.waiting = false;
         });
       })
       .catch(error => {

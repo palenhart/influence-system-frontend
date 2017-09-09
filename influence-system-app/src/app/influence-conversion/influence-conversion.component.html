@@ -23,6 +23,20 @@
               </md-select>
             </td>
           </tr>
+          <div *ngIf="influence?.division != 'none' && waiting == false">
+            <tr>
+              <td>
+                <md-select class="input" placeholder="convert to" [(ngModel)]="toGeneral" name="toGeneral" formControlName="toGeneralCtrl">
+                  <md-option [value]="false">
+                    department
+                  </md-option>
+                  <md-option [value]="true">
+                    general
+                  </md-option>
+                </md-select>
+              </td>
+            </tr>
+          </div>
           <tr>
             <td>
               <md-input-container class="input">
