@@ -63,6 +63,7 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
 import { InfluenceConversionComponent } from './influence-conversion/influence-conversion.component';
 import { ShopComponent } from './shop/shop.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ShopComponent } from './shop/shop.component';
     AllTransactionsComponent,
     InfluenceConversionComponent,
     ShopComponent,
+    LogsComponent,
   ],
   imports: [
     BrowserModule,
