@@ -8,6 +8,7 @@ import { Division } from '../division';
 import { Corporateer } from '../corporateer';
 import { User } from '../user';
 import { Rank } from '../rank';
+import { Log } from '../log';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -49,6 +50,14 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Rank[])
+      .catch(this.handleError);
+  }
+
+  getLogs(): Promise<Log[]> {
+    const url = AppSettings.API + 'logs/';
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as Log[])
       .catch(this.handleError);
   }
 

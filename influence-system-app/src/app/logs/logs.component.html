@@ -1,0 +1,37 @@
+<md-card class="card">
+    <md-card-header>
+      <md-card-title>
+        <h1> Action logs </h1>
+      </md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <div class="example-container mat-elevation-z8">
+        <md-table #table [dataSource]="logDataSource">
+  
+          <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+  
+          <!-- Timestamp Column -->
+          <ng-container cdkColumnDef="time">
+            <md-header-cell *cdkHeaderCellDef> Time </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.timestamp | date:'short'}} </md-cell>
+          </ng-container>
+  
+          <!-- Username Column -->
+          <ng-container cdkColumnDef="username">
+            <md-header-cell *cdkHeaderCellDef> User </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.username}} </md-cell>
+          </ng-container>
+  
+          <!-- Action Column -->
+          <ng-container cdkColumnDef="action">
+            <md-header-cell *cdkHeaderCellDef> Action </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.action}} </md-cell>
+          </ng-container>
+  
+          <md-header-row *cdkHeaderRowDef="displayedLogColumns"></md-header-row>
+          <md-row *cdkRowDef="let row; columns: displayedLogColumns;"></md-row>
+        </md-table>
+      </div>
+    </md-card-content>
+  </md-card>
