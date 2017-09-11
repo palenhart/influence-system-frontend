@@ -7,6 +7,7 @@ import { AppSettings } from '../app-settings';
 import { Division } from '../division';
 import { Corporateer } from '../corporateer';
 import { User } from '../user';
+import { Rank } from '../rank';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -40,6 +41,14 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as User[])
+      .catch(this.handleError);
+  }
+
+  getRanks(): Promise<Rank[]> {
+    const url = AppSettings.API + 'ranks/';
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as Rank[])
       .catch(this.handleError);
   }
 

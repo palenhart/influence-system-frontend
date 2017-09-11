@@ -7,6 +7,7 @@ import { TransactionComponent } from '../transaction/transaction.component';
 import { HistoryComponent } from '../history/history.component';
 import { AdminComponent } from '../admin/admin.component';
 import { InfluenceConversionComponent } from '../influence-conversion/influence-conversion.component';
+import { ShopComponent } from '../shop/shop.component';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
 import { UserlistComponent } from '../userlist/userlist.component';
 import { AllTransactionsComponent } from '../all-transactions/all-transactions.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
   { path: 'conversion', component: InfluenceConversionComponent, canActivate: [AuthGuard] },
+  { path: 'shop', component: ShopComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'users', component: UserlistComponent, canActivate: [AuthGuard, AdminGuard] },
