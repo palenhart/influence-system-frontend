@@ -38,7 +38,7 @@ import {
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { CdkTableModule } from '@angular/cdk';
+import { CdkTableModule } from '@angular/cdk/table';
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -55,6 +55,7 @@ import { TransactionService } from './services/transaction.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AdminGuard } from './services/admin-guard.service';
 import { AdminComponent } from './admin/admin.component';
+import { NewUserDialog } from './admin/admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HistoryComponent } from './history/history.component';
@@ -75,6 +76,7 @@ import { DivisionsComponent } from './divisions/divisions.component';
     InfluenceDetailsComponent,
     LoginFormComponent,
     AdminComponent,
+    NewUserDialog,
     NotFoundComponent,
     ForbiddenComponent,
     HistoryComponent,
@@ -85,6 +87,9 @@ import { DivisionsComponent } from './divisions/divisions.component';
     ShopComponent,
     LogsComponent,
     DivisionsComponent,
+  ],
+  entryComponents: [
+    NewUserDialog
   ],
   imports: [
     BrowserModule,
