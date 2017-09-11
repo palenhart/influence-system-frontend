@@ -68,6 +68,9 @@ export class InfluenceConversionComponent implements OnInit {
       Validators.required]);
     this.amountCtrl.updateValueAndValidity();
     this.amountCtrl.reset();
+    
+    this.toGeneralCtrl.setValue(this.toGeneral);
+    this.toGeneralCtrl.updateValueAndValidity();
   }
 
   convertInfluence() {
@@ -79,6 +82,7 @@ export class InfluenceConversionComponent implements OnInit {
         this.corporateerService.getCurrentInfluence().then(influences => {
           this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0);
           this.influence = new Influence("none", "none", 0);
+          this.toGeneral = false;
           this.waiting = false;
         });
       })
