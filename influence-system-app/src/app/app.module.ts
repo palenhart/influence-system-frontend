@@ -56,6 +56,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AdminGuard } from './services/admin-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { NewUserDialog } from './admin/admin.component';
+import { ChangePasswordDialog } from './user-settings/user-settings.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HistoryComponent } from './history/history.component';
@@ -66,6 +67,7 @@ import { InfluenceConversionComponent } from './influence-conversion/influence-c
 import { ShopComponent } from './shop/shop.component';
 import { LogsComponent } from './logs/logs.component';
 import { DivisionsComponent } from './divisions/divisions.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,7 @@ import { DivisionsComponent } from './divisions/divisions.component';
     LoginFormComponent,
     AdminComponent,
     NewUserDialog,
+    ChangePasswordDialog,
     NotFoundComponent,
     ForbiddenComponent,
     HistoryComponent,
@@ -87,9 +90,12 @@ import { DivisionsComponent } from './divisions/divisions.component';
     ShopComponent,
     LogsComponent,
     DivisionsComponent,
+    ConfirmationDialogComponent,
   ],
   entryComponents: [
-    NewUserDialog
+    NewUserDialog,
+    ConfirmationDialogComponent,
+    ChangePasswordDialog
   ],
   imports: [
     BrowserModule,

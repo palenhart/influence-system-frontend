@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
+import { MdDialog } from '@angular/material';
 
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../services/auth.service';
 import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
@@ -32,7 +34,7 @@ export class ShopComponent implements OnInit {
 
   buyRankForm: FormGroup;
 
-  constructor(private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
+  constructor(public dialog: MdDialog, private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
     this.rankCtrl = new FormControl('', [
       Validators.required
     ]),
@@ -65,6 +67,22 @@ export class ShopComponent implements OnInit {
         "max": true
       });
     }
+  }
+
+  confirmBuyRank(): void {
+    var confirmationMessage;
+    confirmationMessage = "Do you want to buy the rank " + this.rank.name + " for " + this.rank.influenceToBuy + " influence?";
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { confirmationMessage: confirmationMessage }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.buyRank();
+      }
+    });
   }
 
   buyRank() {

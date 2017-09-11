@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
+import { MdDialog } from '@angular/material';
 
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../services/auth.service';
 import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
@@ -34,7 +36,7 @@ export class InfluenceConversionComponent implements OnInit {
 
   influenceGeneralizationForm: FormGroup;
 
-  constructor(private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
+  constructor(public dialog: MdDialog, private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
     this.divisionCtrl = new FormControl('', [
       Validators.required
     ]),
@@ -68,9 +70,29 @@ export class InfluenceConversionComponent implements OnInit {
       Validators.required]);
     this.amountCtrl.updateValueAndValidity();
     this.amountCtrl.reset();
-    
+
     this.toGeneralCtrl.setValue(this.toGeneral);
     this.toGeneralCtrl.updateValueAndValidity();
+  }
+
+  confirmConvertInfluence(): void {
+    var confirmationMessage;
+    if (this.toGeneral || this.influence.division == 'none') {
+      confirmationMessage = "Do you want to convert " + this.amount + " influence from " + this.influence.department + "||" + this.influence.division + " to general influence?";
+    }
+    else {
+      confirmationMessage = "Do you want to convert " + this.amount + " influence from " + this.influence.department + "||" + this.influence.division + " to department influence?";
+    }
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { confirmationMessage: confirmationMessage }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.convertInfluence();
+      }
+    });
   }
 
   convertInfluence() {
