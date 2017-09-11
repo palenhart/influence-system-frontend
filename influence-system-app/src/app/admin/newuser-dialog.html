@@ -1,0 +1,11 @@
+<h1 md-dialog-title>Create new user</h1>
+<div md-dialog-content>
+  <p>Please input username</p>
+  <md-form-field>
+    <input mdInput tabindex="1" [(ngModel)]="data.name">
+  </md-form-field>
+</div>
+<div md-dialog-actions>
+  <button md-button [md-dialog-close]="data.name" tabindex="2">Ok</button>
+  <button md-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+</div>

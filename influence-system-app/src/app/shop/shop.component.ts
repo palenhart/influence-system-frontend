@@ -58,10 +58,8 @@ export class ShopComponent implements OnInit {
   }
 
   private updateInfluencePrice() {
-    console.log("update");
 
     if (this.influence.amount < this.rank.influenceToBuy) {
-      console.log("error");
 
       this.rankCtrl.setErrors({
         "max": true
