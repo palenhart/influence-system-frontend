@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../services/auth.service';
 import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
@@ -21,7 +23,6 @@ export class UserSettingsComponent implements OnInit {
   error = '';
 
   divisions: Division[];
-  currentCorporateer: Corporateer;
   division: string;
 
   divisionCtrl: FormControl;
@@ -31,7 +32,7 @@ export class UserSettingsComponent implements OnInit {
   divisionChangeForm: FormGroup;
   passwordChangeForm: FormGroup;
 
-  constructor(private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
+  constructor(public dialog: MdDialog, private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
     this.divisionCtrl = new FormControl('', [
       Validators.required
     ]),
@@ -55,8 +56,41 @@ export class UserSettingsComponent implements OnInit {
     this.corporateerService.getCurrentCorporateer().then(corporateer => this.division = corporateer.mainDivision.name);
   }
 
+  confirmChangeDivision(): void {
+    var confirmationMessage;
+    confirmationMessage = "Do you want to change your main division to " + this.division + "?";
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { confirmationMessage: confirmationMessage }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.changeDivision();
+      }
+    });
+  }
+
   changeDivision() {
     this.corporateerService.setCurrentCoporateerMainDivision(this.division)
+  }
+
+  confirmChangePassword(): void {
+    var confirmPassword;
+    let dialogRef = this.dialog.open(ChangePasswordDialog, {
+      width: '250px',
+      data: { confirmPassword: confirmPassword }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == this.model.newPassword) {
+        this.changePassword();
+      }
+      else if (result.length > 0) {
+        this.openSnackBar("Passwords didn't match")
+      }
+    });
   }
 
   changePassword() {
@@ -76,6 +110,22 @@ export class UserSettingsComponent implements OnInit {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', { duration: 3000 });
+  }
+
+}
+
+@Component({
+  selector: 'changepassword-dialog',
+  templateUrl: 'changepassword-dialog.html',
+})
+export class ChangePasswordDialog {
+
+  constructor(
+    public dialogRef: MdDialogRef<ChangePasswordDialog>,
+    @Inject(MD_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

@@ -3,6 +3,9 @@ import { Http, Headers, Response } from '@angular/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { MdSnackBar } from '@angular/material';
+import { MdDialog } from '@angular/material';
+
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
@@ -42,12 +45,12 @@ export class TransactionComponent implements OnInit {
 
   types = [
     { value: 'influence', viewValue: 'Influence' },
-    { value: 'demerit', viewValue: 'Demerit' }
+    { value: 'demerits', viewValue: 'Demerits' }
   ];
 
   transactionForm: FormGroup;
 
-  constructor(private http: Http, private authService: AuthService, private corporateerService: CorporateerService, private objectService: ObjectService, private transactionService: TransactionService, private snackBar: MdSnackBar) {
+  constructor(public dialog: MdDialog, private http: Http, private authService: AuthService, private corporateerService: CorporateerService, private objectService: ObjectService, private transactionService: TransactionService, private snackBar: MdSnackBar) {
 
     this.receiverCtrl = new FormControl('', [
       Validators.required
@@ -76,6 +79,22 @@ export class TransactionComponent implements OnInit {
     this.filteredMembers = this.receiverCtrl.valueChanges
       .startWith(null)
       .map(name => this.filterMembers(name));
+  }
+
+  confirmTransaction(): void {
+    var confirmationMessage;
+    confirmationMessage = "Do you want to send " + this.amount + " " + this.type + " to " + this.receiver + "?";
+
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { confirmationMessage: confirmationMessage }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.sendTransaction();
+      }
+    });
   }
 
   sendTransaction() {
