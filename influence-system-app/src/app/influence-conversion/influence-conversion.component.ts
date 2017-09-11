@@ -7,7 +7,6 @@ import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
 import { Influence } from '../influence';
 import { Corporateer } from '../corporateer';
-import { map } from "rxjs/operator/map";
 
 @Component({
   selector: 'app-influence-conversion',

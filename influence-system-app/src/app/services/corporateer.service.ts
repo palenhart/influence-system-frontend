@@ -77,6 +77,21 @@ export class CorporateerService {
       .catch(this.handleError);
   }
 
+  buyRank(rank: Rank) {
+    const url = AppSettings.API + 'buyRank/';
+    return this.http.post(url, JSON.stringify( rank ), { headers: this.headers })
+      .toPromise()
+      .then(response => {
+        if (response.status === 200) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
