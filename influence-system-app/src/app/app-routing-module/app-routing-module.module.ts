@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProfileComponent } from '../profile/profile.component';
 import { WelcomeComponent } from '../welcome/welcome.component';
+import { DivisionsComponent } from '../divisions/divisions.component';
 import { TransactionComponent } from '../transaction/transaction.component';
 import { HistoryComponent } from '../history/history.component';
 import { AdminComponent } from '../admin/admin.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'divisions', component: DivisionsComponent, canActivate: [AuthGuard] },
   { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
   { path: 'conversion', component: InfluenceConversionComponent, canActivate: [AuthGuard] },
