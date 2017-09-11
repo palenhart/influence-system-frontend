@@ -1,0 +1,40 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1> Divisions </h1>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <div class="example-container mat-elevation-z8">
+      <md-table #table [dataSource]="divisionDataSource">
+
+        <!-- Name Column -->
+        <ng-container cdkColumnDef="name">
+          <md-header-cell *cdkHeaderCellDef> Name </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+        </ng-container>
+
+        <!-- Department Column -->
+        <ng-container cdkColumnDef="department">
+          <md-header-cell *cdkHeaderCellDef> Department </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.department.name}} </md-cell>
+        </ng-container>
+
+        <!-- Members Column -->
+        <ng-container cdkColumnDef="members">
+          <md-header-cell *cdkHeaderCellDef> Members </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.membercount}} </md-cell>
+        </ng-container>
+
+        <!-- Influence Column -->
+        <ng-container cdkColumnDef="influence">
+          <md-header-cell *cdkHeaderCellDef> Influence </md-header-cell>
+          <md-cell *cdkCellDef="let row"> {{row.currentInfluence}} </md-cell>
+        </ng-container>
+
+        <md-header-row *cdkHeaderRowDef="displayedDivisionColumns"></md-header-row>
+        <md-row *cdkRowDef="let row; columns: displayedDivisionColumns;"></md-row>
+      </md-table>
+    </div>
+  </md-card-content>
+</md-card>
