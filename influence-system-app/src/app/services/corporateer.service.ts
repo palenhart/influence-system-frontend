@@ -39,7 +39,7 @@ export class CorporateerService {
 
   setCurrentCoporateerMainDivision(division: string) {
     const url = AppSettings.API + 'setMyMainDivision/';
-    return this.http.post(url, JSON.stringify({ division: division }), { headers: this.headers })
+    return this.http.post(url, JSON.stringify({ name: division }), { headers: this.headers })
       .toPromise()
       .then(response => {
         return response
@@ -49,7 +49,7 @@ export class CorporateerService {
 
   distributeTributes() {
     const url = AppSettings.API + 'distributeTributes/';
-    return this.http.get(url, { headers: this.headers })
+    return this.http.post(url, null, { headers: this.headers })
       .toPromise()
       .then(response => {
         if (response.status === 200) {
