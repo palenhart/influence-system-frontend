@@ -117,6 +117,10 @@ export class TransactionComponent implements OnInit {
       .then(response => {
         this.openSnackBar("Transaction successful");
         this.corporateerService.getCurrentCorporateer().then(corporateer => this.currentCorporateer = corporateer);
+      })
+      .catch(error => {
+        var reason = JSON.parse(error._body).message;
+        this.openSnackBar(reason);
       });
   }
 

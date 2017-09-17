@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { CorporateerService } from '../services/corporateer.service';
 import { AuthService } from "../services/auth.service";
@@ -16,17 +17,31 @@ export class AdminComponent implements OnInit {
   username: string;
 
   constructor(private authService: AuthService,
-    private corporateerService: CorporateerService, public dialog: MdDialog) { }
+    private corporateerService: CorporateerService, public dialog: MdDialog, private snackBar: MdSnackBar) { }
 
   ngOnInit() {
   }
 
   distributeTributes() {
-    this.corporateerService.distributeTributes();
+    this.corporateerService.distributeTributes()
+    .then(response => {
+      this.openSnackBar("Tributes successfully distributed")
+    })
+    .catch(error => {
+      var reason = JSON.parse(error._body).message;
+      this.openSnackBar(reason);
+    });
   }
 
   createUser() {
-    this.corporateerService.createUser(this.username);
+    this.corporateerService.createUser(this.username)
+    .then(response => {
+      this.openSnackBar("User successfully created")
+    })
+    .catch(error => {
+      var reason = JSON.parse(error._body).message;
+      this.openSnackBar(reason);
+    });
   }
 
   openNewUserDialog(): void {
@@ -39,6 +54,10 @@ export class AdminComponent implements OnInit {
       this.username = result;
       this.createUser();
     });
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 3000 });
   }
 }
 

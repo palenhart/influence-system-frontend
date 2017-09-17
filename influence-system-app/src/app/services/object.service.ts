@@ -26,7 +26,6 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Division[])
-      .catch(this.handleError);
   }
 
   getCorporateers(): Promise<Corporateer[]> {
@@ -34,7 +33,6 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Corporateer[])
-      .catch(this.handleError);
   }
 
   getUsers(): Promise<User[]> {
@@ -42,7 +40,6 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as User[])
-      .catch(this.handleError);
   }
 
   getRanks(): Promise<Rank[]> {
@@ -50,7 +47,6 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Rank[])
-      .catch(this.handleError);
   }
 
   getLogs(): Promise<Log[]> {
@@ -58,12 +54,6 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Log[])
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
   }
 
 }

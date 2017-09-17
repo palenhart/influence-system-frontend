@@ -21,6 +21,7 @@ export class AuthService {
     private userLoggedIn = new Subject<boolean>();
     private userAdmin = new Subject<boolean>();
 
+    private userIsLoggedIn: boolean;
     private userIsAdmin: boolean;
 
     constructor(private http: Http, private ngZone: NgZone) {
@@ -43,7 +44,7 @@ export class AuthService {
                     this.possibleStatusChange();
                     return false;
                 }
-            }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            })
     }
 
     getToken(): String {
@@ -52,20 +53,26 @@ export class AuthService {
         return token ? token : "";
     }
 
-    isLoggedIn(): boolean {
+    isLoggedInPromise(): Promise<boolean> {
         var token: String = this.getToken();
         if (token && token.length > 0) {
-            return true;
+            return this.getCurrentUser().then(response => {
+                return true;
+            })
+                .catch(error => {
+                    return false;
+                });
         }
         else {
-            return false;
+            return Promise.resolve(false);
         }
     }
 
     isAdminPromise(): Promise<boolean> {
-        if (!this.isLoggedIn()) {
+        if (!this.isLoggedInPromise()) {
             return Promise.resolve(false);
         }
+
         return this.getCurrentUser().then(user => {
             if (user.roles.findIndex(role => role.name.indexOf("ROLE_ADMIN") >= 0) >= 0) {
                 return true;
@@ -73,7 +80,10 @@ export class AuthService {
             else {
                 return false;
             }
-        });
+        })
+            .catch(error => {
+                return false;
+            });
     }
 
     logout(): void {
@@ -92,11 +102,6 @@ export class AuthService {
         return this.http.post(url, JSON.stringify({ currentPassword: currentPassword, newPassword: newPassword }), { headers: secureHeaders })
     }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
-    }
-
     getCurrentUser(): Promise<User> {
         const url = AppSettings.API + 'currentUser';
         var secureHeaders = new Headers({
@@ -106,11 +111,13 @@ export class AuthService {
         return this.http.get(url, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as User)
-        /**.catch(this.handleError);*/
     }
 
     possibleStatusChange(): void {
-        this.userLoggedIn.next(this.isLoggedIn());
+        this.isLoggedInPromise().then(is => {
+            this.userIsLoggedIn = is;
+            this.userLoggedIn.next(is);
+        });
 
         this.isAdminPromise().then(is => {
             this.userIsAdmin = is;
@@ -128,5 +135,9 @@ export class AuthService {
 
     isAdmin(): boolean {
         return this.userIsAdmin;
+    }
+
+    isLoggedIn(): boolean {
+        return this.userIsLoggedIn;
     }
 }
