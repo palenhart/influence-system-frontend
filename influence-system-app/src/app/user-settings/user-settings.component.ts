@@ -74,6 +74,13 @@ export class UserSettingsComponent implements OnInit {
 
   changeDivision() {
     this.corporateerService.setCurrentCoporateerMainDivision(this.division)
+      .then(response => {
+        this.openSnackBar("Main division successfully changed")
+      })
+      .catch(error => {
+        var reason = JSON.parse(error._body).message;
+        this.openSnackBar(reason);
+      });
   }
 
   confirmChangePassword(): void {
@@ -89,6 +96,7 @@ export class UserSettingsComponent implements OnInit {
       }
       else if (result.length > 0) {
         this.openSnackBar("Passwords didn't match")
+        this.newPasswordCtrl.setErrors({ "no match": true });
       }
     });
   }
@@ -100,9 +108,9 @@ export class UserSettingsComponent implements OnInit {
         this.openSnackBar("Password successfully changed")
       })
       .catch(error => {
-        var reason = JSON.parse(error._body).reason;
+        var reason = JSON.parse(error._body).message;
         this.openSnackBar(reason);
-        if (reason === "wrong password") {
+        if (reason === "Wrong password") {
           this.currentPasswordCtrl.setErrors({ "wrong password": true });
         }
       });

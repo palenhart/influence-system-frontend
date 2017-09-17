@@ -20,7 +20,7 @@ export class AppComponent {
   constructor(private authService: AuthService, public snackBar: MdSnackBar,
     private router: Router) {
     this.loginSubscription = this.authService.getUserLoggedIn().subscribe(login => this.login = login),
-    this.adminSubscription = this.authService.getIsAdmin().subscribe(isAdmin => this.isAdmin = isAdmin)
+      this.adminSubscription = this.authService.getIsAdmin().subscribe(isAdmin => this.isAdmin = isAdmin)
   }
 
   logout() {
@@ -35,7 +35,5 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.possibleStatusChange();
-    this.login = this.authService.isLoggedIn();
-    this.isAdmin = this.authService.isAdmin();
   }
 }

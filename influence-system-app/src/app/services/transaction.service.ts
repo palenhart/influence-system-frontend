@@ -24,12 +24,6 @@ export class TransactionService {
     return this.http.post(url,
       JSON.stringify({ receiver: receiver, message: message, amount: amount, type: type }), { headers: this.headers })
       .toPromise()
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
   }
 
   constructor(private http: Http, private authService: AuthService) { }

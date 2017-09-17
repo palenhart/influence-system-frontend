@@ -22,7 +22,6 @@ export class TransactionHistoryService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Transaction[])
-      .catch(this.handleError);
   }
 
   getReceivedTransactions(): Promise<Transaction[]> {
@@ -30,7 +29,6 @@ export class TransactionHistoryService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Transaction[])
-      .catch(this.handleError);
   }
 
   getAllTransactions(): Promise<Transaction[]> {
@@ -38,12 +36,6 @@ export class TransactionHistoryService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Transaction[])
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
   }
 
 }

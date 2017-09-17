@@ -50,6 +50,9 @@
               <md-error *ngIf="newPasswordCtrl.hasError('required')">
                 The new password is <strong>required</strong>
               </md-error>
+              <md-error *ngIf="newPasswordCtrl.hasError('no match')">
+                The passwords didn't match
+              </md-error>
             </md-input-container>
           </td>
         </tr>
