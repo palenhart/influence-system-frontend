@@ -63,7 +63,6 @@ import { HistoryComponent } from './history/history.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { AllTransactionsComponent } from './all-transactions/all-transactions.component';
-import { InfluenceConversionComponent } from './influence-conversion/influence-conversion.component';
 import { ShopComponent } from './shop/shop.component';
 import { LogsComponent } from './logs/logs.component';
 import { DivisionsComponent } from './divisions/divisions.component';
@@ -86,7 +85,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     UserSettingsComponent,
     UserlistComponent,
     AllTransactionsComponent,
-    InfluenceConversionComponent,
     ShopComponent,
     LogsComponent,
     DivisionsComponent,

@@ -1,7 +1,7 @@
 <md-card class="card">
   <md-card-header>
     <md-card-title>
-      <h1>Buy something using influence</h1>
+      <h1>Spend your influence on something nice</h1>
     </md-card-title>
   </md-card-header>
   <md-card-content>
@@ -40,6 +40,67 @@
           <tr>
             <td>
               <button md-button class="button" (click)="confirmBuyRank()" [disabled]="buyRankForm.invalid">BUY</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <h2>Influence to convert</h2>
+    <div *ngIf="influences?.length == 0">
+      You have no influence to convert
+    </div>
+
+    <div *ngIf="influences?.length > 0">
+      <form class="form" [formGroup]="influenceGeneralizationForm">
+        <table class="table">
+          <tr>
+            <td>
+              <md-select class="input" placeholder="Department || Division" [(ngModel)]="influenceToConvert" name="influenceToConvert" formControlName="divisionCtrl"
+                (change)="updateInfluenceAmount()">
+                <md-option *ngFor="let influence of influences" [value]="influence">
+                  {{influence?.department}} || {{influence?.division}}
+                </md-option>
+              </md-select>
+            </td>
+          </tr>
+          <div *ngIf="influenceToConvert?.division != 'none' && waiting == false">
+            <tr>
+              <td>
+                <md-select class="input" placeholder="convert to" [(ngModel)]="toGeneral" name="toGeneral" formControlName="toGeneralCtrl">
+                  <md-option [value]="false">
+                    department
+                  </md-option>
+                  <md-option [value]="true">
+                    general
+                  </md-option>
+                </md-select>
+              </td>
+            </tr>
+          </div>
+          <tr>
+            <td>
+              <md-input-container class="input">
+                <input mdInput placeholder="Amount" [(ngModel)]="amount" formControlName="amountCtrl" />
+                <md-hint align="end">{{ influenceToConvert?.amount }} influence available</md-hint>
+                <md-error *ngIf="amountCtrl.hasError('min')">
+                  Amount must be positive
+                </md-error>
+                <md-error *ngIf="amountCtrl.hasError('max')">
+                  You don't have enough influence
+                </md-error>
+                <md-error *ngIf="amountCtrl.hasError('pattern')">
+                  Please enter a numerical value
+                </md-error>
+                <md-error *ngIf="amountCtrl.hasError('required')">
+                  Amount is <strong>required</strong>
+                </md-error>
+              </md-input-container>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button md-button class="button" (click)="confirmConvertInfluence()" [disabled]="influenceGeneralizationForm.invalid">CONVERT</button>
             </td>
           </tr>
         </table>
