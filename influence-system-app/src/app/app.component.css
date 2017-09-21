@@ -24,3 +24,7 @@ body {
 .scrolling-content {
   overflow: auto;
 }
+
+a.active md-list-item {
+    background: #3f51b5;
+}
