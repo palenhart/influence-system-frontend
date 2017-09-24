@@ -50,8 +50,14 @@
               <md-error *ngIf="newPasswordCtrl.hasError('required')">
                 The new password is <strong>required</strong>
               </md-error>
-              <md-error *ngIf="newPasswordCtrl.hasError('no match')">
-                The passwords didn't match
+              <md-error *ngIf="newPasswordCtrl.hasError('minlength')">
+                The new password must be at least 8 characters long
+              </md-error>
+              <md-error *ngIf="newPasswordCtrl.hasError('maxlength')">
+                The new password must be at most 20 characters long
+              </md-error>
+              <md-error *ngIf="newPasswordCtrl.hasError('pattern')&&!newPasswordCtrl.hasError('minlength')">
+                The new password must contain at leats one uppercase, lowercase, number and special character
               </md-error>
             </md-input-container>
           </td>
