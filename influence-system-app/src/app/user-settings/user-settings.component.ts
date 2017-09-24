@@ -40,7 +40,13 @@ export class UserSettingsComponent implements OnInit {
         Validators.required
       ]),
       this.newPasswordCtrl = new FormControl('', [
-        Validators.required
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern(".*[a-z].*"),
+        Validators.pattern(".*[A-Z].*"),
+        Validators.pattern(".*[0-9].*"),
+        Validators.pattern(".*[\\\\ß!\"#\\$%&'\\(\\)\\*\\+,\\-\\./:;<=>?@\\[\\]^\_`\\{\\|\\}~¡¢£¤¥¦§¨].*")
       ]),
       this.divisionChangeForm = new FormGroup({
         'divisionCtrl': this.divisionCtrl
