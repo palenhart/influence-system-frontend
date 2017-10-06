@@ -11,6 +11,7 @@ import { ShopComponent } from '../shop/shop.component';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
 import { UserlistComponent } from '../userlist/userlist.component';
 import { AllTransactionsComponent } from '../all-transactions/all-transactions.component';
+import { MembershipComponent } from '../membership/membership.component';
 
 import { LogsComponent } from '../logs/logs.component';
 import { LoginFormComponent } from '../auth/login-form/login-form.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'membership', component: MembershipComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'users', component: UserlistComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'transactions', component: AllTransactionsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'logs', component: LogsComponent, canActivate: [AuthGuard, AdminGuard] },

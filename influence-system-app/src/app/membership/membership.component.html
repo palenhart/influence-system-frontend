@@ -1,0 +1,53 @@
+<md-card class="card">
+  <md-card-header>
+    <md-card-title>
+      <h1> Set division membership</h1>
+    </md-card-title>
+  </md-card-header>
+  
+  <md-card-content>
+    <form class="form" [formGroup]="membershipForm">
+      <table>
+        <tr>
+          <td>
+            <md-input-container class="input">
+              <input mdInput placeholder="Corporateer" [mdAutocomplete]="autocorporateer" [(ngModel)]="corporateer" formControlName="corporateerCtrl" />
+              <md-error *ngIf="corporateerCtrl.hasError('required')">
+                A corporateer is <strong>required</strong>.
+              </md-error>
+            </md-input-container>
+
+            <md-autocomplete #autocorporateer="mdAutocomplete">
+                <md-option *ngFor="let member of filteredMembers | async" [value]="member.name">
+                  {{ member.name }}
+                </md-option>
+              </md-autocomplete>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-select class="input" placeholder="Add or remove?" [(ngModel)]="add" name="add" formControlName="addCtrl">
+              <md-option *ngFor="let type of types" [value]="type.value">
+                {{ type.viewValue }}
+              </md-option>
+            </md-select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+              <md-select class="input" placeholder="Division" [(ngModel)]="division" name="division" formControlName="divisionCtrl">
+                 <md-option *ngFor="let division of divisions" [value]="division.name">
+                   {{division.name}}
+                 </md-option>
+              </md-select>
+          </td>
+        </tr>
+        <tr>
+            <td>
+              <button md-button class="button" (click)="sendMembershipChange()" [disabled]="membershipForm.invalid">SEND</button>
+            </td>
+          </tr>
+      </table>
+    </form>
+  </md-card-content>
+</md-card>
