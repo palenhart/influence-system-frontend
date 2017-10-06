@@ -92,6 +92,15 @@
 					</div>
 					<div *ngIf="isAdmin">
 						<md-divider></md-divider>
+						<a routerLink="/membership" routerLinkActive="active">
+							<md-list-item>
+								<md-icon md-list-icon>account_balance</md-icon>
+								<p md-line> Division Membership </p>
+							</md-list-item>
+						</a>
+					</div>
+					<div *ngIf="isAdmin">
+						<md-divider></md-divider>
 						<a routerLink="/users" routerLinkActive="active">
 							<md-list-item>
 								<md-icon md-list-icon>wc</md-icon>

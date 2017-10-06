@@ -41,6 +41,12 @@ export class CorporateerService {
       .toPromise();
   }
 
+  changeCorporateerDivisionMembership(corporateer: string, division: string, add: boolean) {
+    const url = AppSettings.API + 'setMembership/';
+    return this.http.post(url, JSON.stringify({ corporateer: corporateer, division: division, add: add }), { headers: this.headers })
+      .toPromise();
+  }
+
   distributeTributes() {
     const url = AppSettings.API + 'distributeTributes/';
     return this.http.post(url, null, { headers: this.headers })

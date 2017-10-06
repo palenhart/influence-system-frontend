@@ -66,6 +66,7 @@ import { ShopComponent } from './shop/shop.component';
 import { LogsComponent } from './logs/logs.component';
 import { DivisionsComponent } from './divisions/divisions.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MembershipComponent } from './membership/membership.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     LogsComponent,
     DivisionsComponent,
     ConfirmationDialogComponent,
+    MembershipComponent,
   ],
   entryComponents: [
     NewUserDialog,

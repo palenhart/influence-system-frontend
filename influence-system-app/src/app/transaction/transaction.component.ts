@@ -14,7 +14,7 @@ import { AppSettings } from '../app-settings';
 import { Corporateer } from '../corporateer';
 import { CorporateerService } from '../services/corporateer.service';
 import { ObjectService } from '../services/object.service';
-import { TransactionService } from '../services/transaction.service'
+import { TransactionService } from '../services/transaction.service';
 import { AuthService } from "../services/auth.service";
 
 @Component({
@@ -66,7 +66,7 @@ export class TransactionComponent implements OnInit {
     this.messageCtrl = new FormControl('', [
       Validators.required,
       Validators.maxLength(250)
-    ])
+    ]);
 
     this.transactionForm = new FormGroup({
       'receiverCtrl': this.receiverCtrl,
