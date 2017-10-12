@@ -38,6 +38,7 @@ export class TransactionComponent implements OnInit {
 
   corporateers: Corporateer[];
   currentCorporateer = new Corporateer;
+  realreceiver: Corporateer;
   amount;
   receiver = "";
   message = "";
@@ -82,8 +83,11 @@ export class TransactionComponent implements OnInit {
   }
 
   confirmTransaction(): void {
+
+    this.realreceiver = this.corporateers.find(corp => corp.name === this.receiver);
+
     var confirmationMessage;
-    confirmationMessage = "Do you want to send " + this.amount + " " + this.type + " to " + this.receiver + "?";
+    confirmationMessage = "Do you (main division: " + this.currentCorporateer.mainDivision.name + ") want to send " + this.amount + " " + this.type + " to " + this.receiver + "? (main division: " + this.realreceiver.mainDivision.name + ")";
 
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
