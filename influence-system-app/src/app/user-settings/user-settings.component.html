@@ -24,50 +24,5 @@
         </tr>
       </table>
     </form>
-
-    <h2>Change Password</h2>
-    <form class="form" [formGroup]="passwordChangeForm">
-      <table class="table">
-        <tr>
-          <td>
-            <md-input-container class="input">
-              <input mdInput type="password" placeholder="current password" [(ngModel)]="model.currentPassword" formControlName="currentPasswordCtrl"
-              />
-              <md-error *ngIf="currentPasswordCtrl.hasError('required')">
-                The current password is <strong>required</strong>
-              </md-error>
-              <md-error *ngIf="currentPasswordCtrl.hasError('wrong password')">
-                This password is <strong>wrong</strong>
-              </md-error>
-            </md-input-container>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <md-input-container class="input">
-              <input mdInput type="password" placeholder="new password" [(ngModel)]="model.newPassword" formControlName="newPasswordCtrl"
-              />
-              <md-error *ngIf="newPasswordCtrl.hasError('required')">
-                The new password is <strong>required</strong>
-              </md-error>
-              <md-error *ngIf="newPasswordCtrl.hasError('minlength')">
-                The new password must be at least 8 characters long
-              </md-error>
-              <md-error *ngIf="newPasswordCtrl.hasError('maxlength')">
-                The new password must be at most 20 characters long
-              </md-error>
-              <md-error *ngIf="newPasswordCtrl.hasError('pattern')&&!newPasswordCtrl.hasError('minlength')">
-                The new password must contain at leats one uppercase, lowercase, number and special character
-              </md-error>
-            </md-input-container>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button md-button class="button" (click)="confirmChangePassword()" [disabled]="passwordChangeForm.invalid">CHANGE PASSWORD</button>
-          </td>
-        </tr>
-      </table>
-    </form>
   </md-card-content>
 </md-card>
