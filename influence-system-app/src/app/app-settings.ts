@@ -1,3 +1,3 @@
 export class AppSettings {
-    public static API='http://127.0.0.1:8080/';
+    public static API='https://api.influence-system.tk:8443/';
 }
