@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../user';
@@ -23,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     loginForm: FormGroup;
 
     constructor(private authService: AuthService,
-        private router: Router) {
+        private router: Router, private snackBar: MdSnackBar) {
         this.usernameCtrl = new FormControl('', [
             Validators.required
         ]),
@@ -48,12 +49,16 @@ export class LoginFormComponent implements OnInit {
                     this.router.navigate(['profile']);
                 } else {
                     // login failed
-                    this.error = 'Username or password is incorrect';
                     this.loading = false;
                 }
             }, error => {
                 this.loading = false;
+                this.openSnackBar('Username or password is incorrect');
                 this.error = error;
             });
     }
+
+    openSnackBar(message: string) {
+        this.snackBar.open(message, 'Close', { duration: 3000 });
+      }
 }

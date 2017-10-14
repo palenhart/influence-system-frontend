@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'divisions', component: DivisionsComponent, canActivate: [AuthGuard] },
+  { path: 'divisions', component: DivisionsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
   { path: 'shop', component: ShopComponent, canActivate: [AuthGuard] },
