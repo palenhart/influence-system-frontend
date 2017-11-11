@@ -28,11 +28,6 @@ export class HistoryComponent implements OnInit {
     this.sentDataSource = new TransactionDataSource(this.transactionSentDatabase);
     this.transactionHistoryService.getSendTransactions().then(sent =>
       this.transactionSentDatabase.refreshData(sent));
-
-
-    this.receivedDataSource = new TransactionDataSource(this.transactionReceivedDatabase);
-    this.transactionHistoryService.getReceivedTransactions().then(received =>
-      this.transactionReceivedDatabase.refreshData(received));
   }
 
   constructor(private transactionHistoryService: TransactionHistoryService) { }
