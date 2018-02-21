@@ -106,5 +106,61 @@
         </table>
       </form>
     </div>
+
+
+    <h2>Auctions</h2>
+    <div *ngIf="auctions?.length == 0">
+      There are currently no auctions
+    </div>
+
+    <div *ngIf="auctions?.length > 0">
+      <form class="form" [formGroup]="auctionBiddingForm">
+        <table class="table">
+          <tr>
+            <td>
+              <md-select class="input" placeholder="Auction Title" [(ngModel)]="auctionToBid" name="auctionToBid" formControlName="auctionCtrl"
+                (change)="updateInfluenceToBidAmount()">
+                <md-option *ngFor="let auction of auctions" [value]="auction">
+                  {{auction?.title}}
+                </md-option>
+              </md-select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Current bid: {{auctionToBid?.currentBid}}
+            </td>
+          </tr>
+          <div *ngIf="auctionToBid?.highestBidder == currentCorporateer.name">
+            <tr>
+              <td>
+                You are the highest bidder with a bid of up to {{auctionToBid?.highestBid}}!
+              </td>
+            </tr>
+          </div>
+          <tr>
+            <td>
+              <md-input-container class="input">
+                <input mdInput placeholder="Amount" [(ngModel)]="bidAmount" formControlName="bidAmountCtrl" />
+                <md-error *ngIf="bidAmountCtrl.hasError('min')">
+                  Bid amount must be at least {{auctionToBid?.currentBid + auctionToBid?.minStep}}
+                </md-error>
+                <md-error *ngIf="bidAmountCtrl.hasError('pattern')">
+                  Please enter a numerical value
+                </md-error>
+                <md-error *ngIf="bidAmountCtrl.hasError('required')">
+                  Amount is <strong>required</strong>
+                </md-error>
+              </md-input-container>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button md-button class="button" (click)="confirmBidInfluence()" [disabled]="auctionBiddingForm.invalid">BID</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
   </md-card-content>
 </md-card>

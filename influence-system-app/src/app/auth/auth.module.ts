@@ -26,7 +26,7 @@ import {HttpModule} from "@angular/http";
         GrowlModule*/
     ],
     providers: [AuthService, AuthGuard],
-    declarations: [AuthComponent, LoginFormComponent, RegisterFormComponent],
+    declarations: [AuthComponent, RegisterFormComponent],
     exports: [AuthComponent]
 })
 export class AuthModule {

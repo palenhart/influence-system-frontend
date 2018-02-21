@@ -9,6 +9,7 @@ import { Corporateer } from '../corporateer';
 import { User } from '../user';
 import { Rank } from '../rank';
 import { Log } from '../log';
+import { Auction } from '../auction';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -54,6 +55,19 @@ export class ObjectService {
     return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Log[])
+  }
+
+  getAuctions() : Promise<Auction[]> {
+    const url = AppSettings.API + 'auctions/';
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response.json() as Auction[])
+  }
+
+  placeBid(auction: Auction, amount:number){
+    const url = AppSettings.API + 'auctions/';
+    return this.http.post(url, JSON.stringify({ id: auction.id, amount: amount }), { headers: this.headers })
+    .toPromise();
   }
 
 }
