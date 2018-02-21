@@ -10,6 +10,7 @@ import { ObjectService } from '../services/object.service';
 import { Influence } from '../influence';
 import { Corporateer } from '../corporateer';
 import { Rank } from '../rank';
+import { Auction } from '../auction';
 
 @Component({
   selector: 'app-shop',
@@ -18,6 +19,7 @@ import { Rank } from '../rank';
 })
 export class ShopComponent implements OnInit {
 
+  now: any;
   model: any = {};
   error = '';
   waiting = false;
@@ -41,13 +43,23 @@ export class ShopComponent implements OnInit {
   amount: number;
   toGeneral = false;
 
-  divisionsWithInfluence: string[];
-
   divisionCtrl: FormControl;
   toGeneralCtrl: FormControl;
   amountCtrl: FormControl;
 
   influenceGeneralizationForm: FormGroup;
+
+  //
+  // Auctions
+  //
+  auctions: Auction[];
+  auctionToBid: Auction;
+  bidAmount: number;
+
+  auctionCtrl: FormControl;
+  bidAmountCtrl: FormControl;
+
+  auctionBiddingForm: FormGroup;
 
   constructor(public dialog: MdDialog, private authService: AuthService, private objectService: ObjectService, private corporateerService: CorporateerService, private snackBar: MdSnackBar) {
     this.rankCtrl = new FormControl('', [
@@ -78,19 +90,38 @@ export class ShopComponent implements OnInit {
           'toGeneralCtrl': this.toGeneralCtrl,
           'amountCtrl': this.amountCtrl
         });
+
+        this.auctionCtrl = new FormControl('', [
+          Validators.required
+        ]),
+           this.bidAmountCtrl = new FormControl('', [
+            Validators.required,
+            Validators.pattern(/^[-]?[0-9]+$/),
+            Validators.min(1)
+          ]),
+          this.auctionBiddingForm = new FormGroup({
+            'auctionCtrl': this.auctionCtrl,
+            'bidAmountCtrl': this.bidAmountCtrl
+          });
   }
 
   ngOnInit() {
+    this.now = Date.now();
     this.corporateerService.getCurrentCorporateer().then(corporateer => {
       this.currentCorporateer = corporateer;
       this.objectService.getRanks().then(ranks => {
-        this.ranks = ranks.filter(rank => rank.buyingAllowed == true).filter(rank => rank.level > this.currentCorporateer.rank.level)
+        this.ranks = ranks.filter(rank => rank.buyingAllowed == true).filter(rank => rank.rankLevel > this.currentCorporateer.rank.rankLevel)
       });
     });
     this.corporateerService.getCurrentInfluence().then(influences => {
       this.influence = influences.find(influence => influence.department == 'none' && influence.division == 'none');
       this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0);
     });
+    this.objectService.getAuctions().then(auctions => {
+      this.auctions = auctions.filter(auction => Date.parse(auction.beginningTimestamp) < this.now).filter(auction => Date.parse(auction.endingTimestamp) > this.now)
+    });
+    
+    
     //this.corporateerService.getCurrentInfluence().then(influences => {
     //  this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0)
     //});
@@ -133,13 +164,13 @@ export class ShopComponent implements OnInit {
             this.influence = influences.find(influence => influence.department == 'none' && influence.division == 'none');
           });
           this.objectService.getRanks().then(ranks => {
-            this.ranks = ranks.filter(rank => rank.buyingAllowed == true).filter(rank => rank.level > this.currentCorporateer.rank.level);
+            this.ranks = ranks.filter(rank => rank.buyingAllowed == true).filter(rank => rank.rankLevel > this.currentCorporateer.rank.rankLevel);
           });
           this.waiting = false;
         });
       })
       .catch(error => {
-        var reason = JSON.parse(error._body).reason;
+        var reason = JSON.parse(error._body).message;
         this.openSnackBar(reason);
       });
     this.rank = new Rank(0);
@@ -157,6 +188,15 @@ export class ShopComponent implements OnInit {
 
     this.toGeneralCtrl.setValue(this.toGeneral);
     this.toGeneralCtrl.updateValueAndValidity();
+  }
+
+  private updateInfluenceToBidAmount() {
+    this.bidAmountCtrl.setValidators([
+      Validators.pattern(/^[-]?[0-9]+$/),
+      Validators.min(this.auctionToBid.currentBid + this.auctionToBid.minStep),
+      Validators.required]);
+    this.bidAmountCtrl.updateValueAndValidity();
+    this.bidAmountCtrl.reset();
   }
 
   confirmConvertInfluence(): void {
@@ -193,10 +233,43 @@ export class ShopComponent implements OnInit {
         });
       })
       .catch(error => {
-        var reason = JSON.parse(error._body).reason;
+        var reason = JSON.parse(error._body).message;
         this.openSnackBar(reason);
       });
     this.influenceGeneralizationForm.reset();
+  }
+
+  confirmBidInfluence(): void {
+    var confirmationMessage;
+      confirmationMessage = "Do you want to bid " + this.bidAmount + " influence on the auction " + this.auctionToBid.title + "?";
+    
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { confirmationMessage: confirmationMessage }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.bidInfluence();
+      }
+    });
+  }
+
+  bidInfluence() {
+    this.waiting = true;
+    this.objectService.placeBid(this.auctionToBid, this.bidAmount)
+      .then(response => {
+        this.openSnackBar(JSON.parse(response.text()).message)
+        this.objectService.getAuctions().then(auctions => {
+          this.auctions = auctions.filter(auction => Date.parse(auction.beginningTimestamp) < this.now).filter(auction => Date.parse(auction.endingTimestamp) > this.now)
+          this.waiting = false;
+        });
+      })
+      .catch(error => {
+        var reason = JSON.parse(error._body).message;
+        this.openSnackBar(reason);
+      });
+    this.auctionBiddingForm.reset();
   }
 
   openSnackBar(message: string) {

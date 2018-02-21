@@ -7,6 +7,6 @@ export class Rank {
     name: string;
     tributesPerWeek: number;
     influenceToBuy: number;
-    level: number;
+    rankLevel: number;
     buyingAllowed: boolean;
 }

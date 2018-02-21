@@ -67,6 +67,8 @@ import { LogsComponent } from './logs/logs.component';
 import { DivisionsComponent } from './divisions/divisions.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MembershipComponent } from './membership/membership.component';
+import { CreateAuctionComponent } from './create-auction/create-auction.component';
+import { BidAuctionComponent } from './bid-auction/bid-auction.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { MembershipComponent } from './membership/membership.component';
     DivisionsComponent,
     ConfirmationDialogComponent,
     MembershipComponent,
+    CreateAuctionComponent,
+    BidAuctionComponent,
   ],
   entryComponents: [
     NewUserDialog,
