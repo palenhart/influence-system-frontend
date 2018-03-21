@@ -131,7 +131,7 @@
               Current bid: {{auctionToBid?.currentBid}}
             </td>
           </tr>
-          <div *ngIf="auctionToBid?.highestBidder == currentCorporateer.name">
+          <div *ngIf="auctionToBid?.highestBidder == currentCorporateer?.name">
             <tr>
               <td>
                 You are the highest bidder with a bid of up to {{auctionToBid?.highestBid}}!
