@@ -31,7 +31,7 @@
           <td>
             <md-input-container class="input">
               <input mdInput placeholder="Amount" [(ngModel)]="amount" formControlName="amountCtrl" />
-              <md-hint align="end">{{ currentCorporateer.tributes }} tributes available</md-hint>
+              <md-hint align="end">{{ currentCorporateer?.tributes }} tributes available</md-hint>
               <md-error *ngIf="amountCtrl.hasError('min')">
                 Amount must be positive
               </md-error>
