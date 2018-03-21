@@ -37,7 +37,7 @@ export class TransactionComponent implements OnInit {
   filteredMembers: any;
 
   corporateers: Corporateer[];
-  currentCorporateer = new Corporateer;
+  currentCorporateer: Corporateer;
   realreceiver: Corporateer;
   amount;
   receiver = "";
@@ -59,7 +59,7 @@ export class TransactionComponent implements OnInit {
     this.amountCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[-]?[0-9]+$/),
-      Validators.max(this.currentCorporateer.tributes),
+      //Validators.max(this.currentCorporateer.tributes),
       Validators.min(1)]);
     this.typeCtrl = new FormControl('', [
       Validators.required
@@ -88,6 +88,10 @@ export class TransactionComponent implements OnInit {
 
     var confirmationMessage;
     confirmationMessage = "Do you (main division: " + this.currentCorporateer.mainDivision.name + ") want to send " + this.amount + " " + this.type + " to " + this.receiver + "? (main division: " + this.realreceiver.mainDivision.name + ")";
+
+    if(this.currentCorporateer.mainDivision.name == "none" || this.realreceiver.mainDivision.name == "none"){
+      confirmationMessage = confirmationMessage + " ARE YOU SURE? Either sender or receiver does not have a main division. ";
+    }
 
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',

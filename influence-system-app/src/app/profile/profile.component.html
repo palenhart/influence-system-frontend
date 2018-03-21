@@ -20,11 +20,11 @@
     </tr>
     <tr>
       <td><label>Main Division:</label></td>
-      <td>{{corporateer?.mainDivision.name}}</td>
+      <td [ngStyle]="{'color': corporateer?.mainDivision.name === 'none' ? 'red' : 'green'}">{{corporateer?.mainDivision.name}}</td>
     </tr>
     <tr>
       <td><label>Department:</label></td>
-      <td>{{corporateer?.mainDivision.department.name}}</td>
+      <td [ngStyle]="{'color': corporateer?.mainDivision.department.name === 'none' ? 'red' : 'green'}">{{corporateer?.mainDivision.department.name}}</td>
     </tr>
     <tr>
       <td><label>Lifetime Influence:</label></td>
@@ -32,7 +32,7 @@
     </tr>
     <tr>
       <td><label>Tributes:</label></td>
-      <td>{{corporateer?.tributes}}</td>
+      <td>{{corporateer?.tributes}} (of {{corporateer?.rank.tributesPerWeek * 1.5}} you can hold)</td>
     </tr>
     <tr>
       <td><label>Total Influence:</label></td>
