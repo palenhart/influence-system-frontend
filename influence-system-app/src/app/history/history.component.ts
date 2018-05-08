@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
+import { MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DatePipe } from '@angular/common';
@@ -24,13 +25,15 @@ export class HistoryComponent implements OnInit {
   sentDataSource: TransactionDataSource | null;
   receivedDataSource: TransactionDataSource | null;
 
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
-    this.sentDataSource = new TransactionDataSource(this.transactionSentDatabase);
+    this.sentDataSource = new TransactionDataSource(this.transactionSentDatabase, this.sort);
     this.transactionHistoryService.getSendTransactions().then(sent =>
       this.transactionSentDatabase.refreshData(sent));
 
 
-    this.receivedDataSource = new TransactionDataSource(this.transactionReceivedDatabase);
+    this.receivedDataSource = new TransactionDataSource(this.transactionReceivedDatabase, this.sort);
     this.transactionHistoryService.getReceivedTransactions().then(received =>
       this.transactionReceivedDatabase.refreshData(received));
   }
@@ -63,13 +66,53 @@ export class TransactionDatabase {
 * should be rendered.
 */
 export class TransactionDataSource extends DataSource<any> {
-  constructor(private _transactionDatabase: TransactionDatabase) {
+  constructor(private _transactionDatabase: TransactionDatabase, private _sort: MatSort) {
     super();
+    _sort.active="time";
+    _sort.direction="desc";
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Transaction[]> {
-    return this._transactionDatabase.dataChange;
+
+    const displayDataChanges = [
+      this._transactionDatabase.dataChange,
+      this._sort.sortChange,
+    ];
+
+    return Observable.merge(...displayDataChanges).map(() => {
+
+      // Sort filtered data
+      const sortedData = this.sortData(this._transactionDatabase.data.slice());
+
+      return sortedData;
+    });
+
+    //return this._transactionDatabase.dataChange;
+  }
+
+  /** Returns a sorted copy of the database data. */
+  sortData(data: Transaction[]): Transaction[] {
+    if (!this._sort.active || this._sort.direction == '') { return data; }
+    //if (!this._sort.active || this._sort.direction == '') { this._sort.direction = 'asc'; }
+
+    return data.sort((a, b) => {
+      let propertyA: String = '';
+      let propertyB: String = '';
+
+      switch (this._sort.active) {
+        case 'time': [propertyA, propertyB] = [a.timestamp, b.timestamp]; break;
+        //case 'receivedTime': [propertyA, propertyB] = [a.timestamp, b.timestamp]; break;
+        //case 'userName': [propertyA, propertyB] = [a.name, b.name]; break;
+        //case 'progress': [propertyA, propertyB] = [a.progress, b.progress]; break;
+        //case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
+      }
+
+      let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
+    });
   }
 
   disconnect() { }
