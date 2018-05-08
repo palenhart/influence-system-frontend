@@ -67,7 +67,7 @@ export class CorporateerService {
 
   createUser(name: String) {
     const url = AppSettings.API + 'users/';
-    return this.http.post(url, JSON.stringify({ name: name }), { headers: this.headers })
+    return this.http.post(url, JSON.stringify({ name: name, divisions: [] }), { headers: this.headers })
       .toPromise()
   }
 }

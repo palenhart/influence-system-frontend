@@ -118,7 +118,7 @@ export class ShopComponent implements OnInit {
       this.influences = influences.filter(influence => influence.department != "none").filter(influence => influence.amount != 0);
     });
     this.objectService.getAuctions().then(auctions => {
-      this.auctions = auctions.filter(auction => Date.parse(auction.beginningTimestamp) < this.now).filter(auction => Date.parse(auction.endingTimestamp) > this.now)
+      this.auctions = auctions;
     });
     
     

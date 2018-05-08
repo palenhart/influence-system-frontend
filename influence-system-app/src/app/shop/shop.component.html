@@ -133,8 +133,15 @@
           </tr>
           <div *ngIf="auctionToBid?.highestBidder == currentCorporateer?.name">
             <tr>
+              <td [ngStyle]="{'color': 'green'}">
+                You are the highest bidder!
+              </td>
+            </tr>
+          </div>
+          <div *ngIf="auctionToBid?.highestBidder != currentCorporateer?.name">
+            <tr>
               <td>
-                You are the highest bidder with a bid of up to {{auctionToBid?.highestBid}}!
+                {{auctionToBid?.highestBidder}}
               </td>
             </tr>
           </div>
