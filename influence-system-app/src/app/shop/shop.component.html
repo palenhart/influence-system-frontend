@@ -5,47 +5,7 @@
     </md-card-title>
   </md-card-header>
   <md-card-content>
-    <h2>Buy a higher rank</h2>
-    <div *ngIf="ranks?.length == 0">
-      You cannot buy a higher rank
-    </div>
-
-    <div *ngIf="ranks?.length > 0">
-      <form class="form" [formGroup]="buyRankForm">
-        <table class="table">
-          <tr>
-            <td>
-              <md-select class="input" placeholder="Rank to buy" [(ngModel)]="rank" name="rank" formControlName="rankCtrl" (change)="updateInfluencePrice()">
-                <md-option *ngFor="let rank of ranks" [value]="rank">
-                  {{rank?.name}}
-                </md-option>
-              </md-select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <md-input-container class="input">
-                <input mdInput placeholder="Price (general)" [(ngModel)]="rank.influenceToBuy" formControlName="priceCtrl" />
-                <md-hint align="end">{{ influence?.amount }} influence available</md-hint>
-              </md-input-container>
-            </td>
-          </tr>
-          <div *ngIf="rankCtrl.hasError('max')">
-            <tr>
-              <td>
-                You don't have enough influence to buy this rank
-              </td>
-            </tr>
-          </div>
-          <tr>
-            <td>
-              <button md-button class="button" (click)="confirmBuyRank()" [disabled]="buyRankForm.invalid">BUY</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
-
+    
     <h2>Influence to convert</h2>
     <div *ngIf="influences?.length == 0">
       You have no influence to convert
